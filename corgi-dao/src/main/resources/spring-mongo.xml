@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="mongo" class="com.mongodb.Mongo">
+		<constructor-arg index="0" value="${mongo.master.host}" type="java.lang.String" />
+		<constructor-arg index="1" value="${mongo.master.port}" type="int" />
+	</bean>
+
+	<bean id="userCredentials" class="org.springframework.data.authentication.UserCredentials">
+		<constructor-arg index="0" value="${mongo.master.username}" />
+		<constructor-arg index="1" value="${mongo.master.password}" />
+	</bean>
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg index="0" ref="mongo" />
+		<constructor-arg index="1" value="${mongo.master.dbname}" type="java.lang.String" />
+		<constructor-arg index="2" ref="userCredentials" />
+	</bean>
+
+</beans>

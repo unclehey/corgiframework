@@ -5,36 +5,49 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import pers.corgiframework.dao.domain.SmsRecord;
-import pers.corgiframework.service.ISmsService;
-import pers.corgiframework.tool.constants.SmsConstant;
-import pers.corgiframework.tool.utils.DateTimeUtil;
+import org.springframework.util.CollectionUtils;
+import pers.corgiframework.dao.mongo.ApiLog;
+import pers.corgiframework.service.IApiLogService;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by syk on 2017/8/18.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring.xml", "classpath:spring-mvc.xml", "classpath:spring-mybatis.xml", "classpath:spring-redis.xml"})
+@ContextConfiguration(locations = {"classpath:spring.xml"})
 public class JunitTest {
 
     final static Logger LOGGER = LoggerFactory.getLogger(JunitTest.class);
 
     @Autowired
-    private ISmsService smsService;
+    private IApiLogService apiLogService;
 
     @Test
     public void test(){
         try {
-            /*SmsRecord smsRecord = new SmsRecord();
-            smsRecord.setMobile("17600669027");
-            smsRecord.setContent("八月的第二天，祝你好运！");
-            smsRecord.setType(SmsConstant.FORGET_PASS);
-            smsRecord.setFlag(1);
-            smsRecord.setCreateTime(DateTimeUtil.getNowDateTime());
-            smsService.insert(smsRecord);
-            //SmsRecord smsRecord = smsService.selectByPrimaryKey(1);
-            LOGGER.info("短信内容 = {}，发送时间 = {}", smsRecord.getContent(), smsRecord.getCreateTime());*/
-            smsService.sendSms("17600669027", SmsConstant.VERIFY_CODE, "123456", "嘿の大叔");
+            /*ApiLog apiLog = new ApiLog();
+            apiLog.setUserId(1);
+            apiLog.setMobile("15911186198");
+            apiLog.setParamIn("mongo成功");
+            apiLog.setCreateTime(DateTimeUtil.getNowDateTime());
+            apiLogService.save(apiLog);*/
+            Map<String, Object> map = new HashMap<>();
+            // 从第几条开始查询
+            map.put("currentPage", 0);
+            // 要查询多少条数据
+            map.put("pageCount", 10);
+            map.put("mobile", "17600669027");
+            long count = apiLogService.selectListCountByCondition(map);
+            LOGGER.info("查询数据 = {} 条", count);
+            List<ApiLog> list = apiLogService.selectListByCondition(map);
+            if (!CollectionUtils.isEmpty(list)) {
+                for (ApiLog apiLog : list) {
+                    LOGGER.info("手机号 = {}，日志内容 = {}，存储时间 = {}", apiLog.getMobile(), apiLog.getParamIn(), apiLog.getCreateTime());
+                }
+            }
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }

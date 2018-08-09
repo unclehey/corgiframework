@@ -88,6 +88,12 @@
             <artifactId>xbean-spring</artifactId>
         </dependency>
 
+        <!-- spring-data-mongodb -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

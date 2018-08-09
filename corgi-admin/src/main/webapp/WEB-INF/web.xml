@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
-  <display-name>zmxj-mgr</display-name>
+  <display-name>corgi-admin</display-name>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:spring.xml, classpath:spring-mybatis.xml, classpath:spring-redis.xml</param-value>
+    <param-value>classpath:spring.xml</param-value>
   </context-param>
 
   <!-- encodingFilter -->
@@ -39,7 +39,7 @@
   </listener>
 
   <servlet>
-    <servlet-name>zmxj-mgr</servlet-name>
+    <servlet-name>corgi-admin</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
@@ -51,21 +51,9 @@
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>zmxj-mgr</servlet-name>
+    <servlet-name>corgi-admin</servlet-name>
     <url-pattern>*.do</url-pattern>
   </servlet-mapping>
-
-  <!--&lt;!&ndash; 竞拍timer servlet &ndash;&gt;
-  <servlet>
-    <servlet-name>auction-timer</servlet-name>
-    <servlet-class>com.zmgj.zmxj.servlet.AuctionTimerServlet</servlet-class>
-    <load-on-startup>2</load-on-startup>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>auction-timer</servlet-name>
-    <url-pattern>/auction-timer</url-pattern>
-  </servlet-mapping>-->
 
   <!-- 配置session超时时间，单位分钟 -->
   <session-config>

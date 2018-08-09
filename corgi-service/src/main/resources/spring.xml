@@ -9,7 +9,15 @@
 			http://www.springframework.org/schema/task
 			http://www.springframework.org/schema/task/spring-task.xsd">
 
-	<!--自动扫描依赖将其注入为bean -->
+	<!-- 引入配置属性文件 -->
+	<context:property-placeholder location="classpath:config.properties"/>
+
+	<!-- 引入配置文件 -->
+	<import resource="spring-redis.xml" />
+	<import resource="spring-mybatis.xml" />
+	<import resource="spring-mongo.xml" />
+
+	<!-- 自动扫描依赖将其注入为bean -->
 	<context:component-scan base-package="pers.corgiframework.service, pers.corgiframework.transfer" />
 
 	<!-- 异步任务调度器 -->

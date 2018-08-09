@@ -61,6 +61,10 @@
                 <static.file.path>/data/static/upload/corgi</static.file.path>
                 <static.file.url>http://localhost:8080</static.file.url>
                 <public.third.url>http://localhost:8080/corgi-third</public.third.url>
+                <mongo.master.host>192.168.4.241</mongo.master.host>
+                <mongo.master.dbname>zmxj</mongo.master.dbname>
+                <mongo.master.username>zmxj</mongo.master.username>
+                <mongo.master.password>zmxj</mongo.master.password>
             </properties>
         </profile>
 
@@ -311,6 +315,13 @@
                 <groupId>com.thoughtworks.xstream</groupId>
                 <artifactId>xstream</artifactId>
                 <version>1.4.9</version>
+            </dependency>
+
+            <!-- spring-data-mongodb -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-mongodb</artifactId>
+                <version>1.10.6.RELEASE</version>
             </dependency>
 
         </dependencies>

@@ -35,12 +35,14 @@
 		其他Mapper接口需继承该接口；
 		Mapper.xml文件保留自动生成配置，添加自定义sql语句；
 	3、model自定义实体Bean；
-	4、resources资源文件
+	4、mongo MongoDB实体Bean（根据此自动创建Collection）；
+	5、resources资源文件
 		config.properties系统配置文件；
 		generator.properties、generatorConfig.xml mybatis自动生成配置文件：idea命令mybatis-generator:generate -e；
 		logback.xml日志配置文件；
 		spring-mybatis.xml数据库连接池、事务等相关配置；
 		spring-redis.xml redis配置文件；
+		spring-mongo.xml mongo配置文件；
 
 四、corgi-service 服务层
 	1、service包
@@ -48,6 +50,12 @@
 		BaseServiceImpl类实现IBaseService接口，传入对应mapper；
 		其他service接口继承IBaseService接口，定义自己需要的方法；
 		其他serviceImpl接口实现类，继承BaseServiceImpl类，实现相对应service接口；
+		==========================Mongodb相关======================================
+		IBaseRepository定义mongo基本操作接口；
+		BaseRepositoryImpl类实现IBaseRepository接口，实现mongo底层操作；
+		其他service接口继承IBaseRepository接口，定义自己需要的方法；
+		其他serviceImpl接口实现类，继承BaseRepositoryImpl类，实现相对应service接口；
+		==========================Mongodb相关======================================
 		IAliPayService定义支付宝支付相关接口；
 		IPaymentOrderService定义订单相关接口；
 		IPublicService定义共用接口：包括组装查询条件、发送邮件等；
