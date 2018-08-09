@@ -1,0 +1,94 @@
+﻿CorgiFramework各部分详细介绍
+
+一、corgi.sql初始化sql脚本【database字符集utf8mb4，排序规则utf8mb4_unicode_ci，支持Emoji表情】。
+
+二、corgi-tool 工具类
+    1、constants常量包
+        BisPromptConstant系统返回状态码及信息常量类；
+		SmsConstant短信常量类；
+    2、enums枚举包
+		MgrFuncEnum后台权限管理枚举类；
+		SysRedisEnum需要配置到数据库的redis缓存枚举类；
+    3、utils工具包
+        alipay 支付宝支付相关工具类；
+        wechat 微信相关工具类；
+		AESUtil AES加解密工具类；
+		Base64Util Base64工具类；
+		DateTimeUtil Java8全新日期时间API；
+		FileUtil 文件操作工具类；
+		JsonUtil Json工具类；
+		OkHttpClientUtil HttpClient工具类；
+		PayUtil 支付工具类；
+		PropertiesUtil 配置文件读取工具类；
+		RSAUtil RSA加解密工具类；
+		SerializationUtil 序列化工具类；
+		SignUtil 签名工具类；
+		SmsUtil 短信发送工具类（阿里云）;
+		StringUtil 字符串工具类；
+		VerifyCodeUtil 图片验证码工具类；
+		XmlUtil Xml工具类；
+
+三、corgi-dao DAO层、项目配置文件及mybatis自动生成配置
+	1、domain自动生成实体Bean；
+	2、mapper dao及sql映射文件
+		BaseMapper定义增、删、改、查、列表查询等基本接口；
+		其他Mapper接口需继承该接口；
+		Mapper.xml文件保留自动生成配置，添加自定义sql语句；
+	3、model自定义实体Bean；
+	4、resources资源文件
+		config.properties系统配置文件；
+		generator.properties、generatorConfig.xml mybatis自动生成配置文件：idea命令mybatis-generator:generate -e；
+		logback.xml日志配置文件；
+		spring-mybatis.xml数据库连接池、事务等相关配置；
+		spring-redis.xml redis配置文件；
+
+四、corgi-service 服务层
+	1、service包
+		IBaseService定义增、删、改、查、列表查询等基本接口；
+		BaseServiceImpl类实现IBaseService接口，传入对应mapper；
+		其他service接口继承IBaseService接口，定义自己需要的方法；
+		其他serviceImpl接口实现类，继承BaseServiceImpl类，实现相对应service接口；
+		IAliPayService定义支付宝支付相关接口；
+		IPaymentOrderService定义订单相关接口；
+		IPublicService定义共用接口：包括组装查询条件、发送邮件等；
+		IRedisService定义redis相关操作接口；
+		IWeChatService定义微信相关接口；
+	2、transfer转换包
+		JsonTransfer Java8全新日期时间API格式转化工具类，在spring-mvc.xml中引用
+		<property name="objectMapper" value="#{jsonTransfer.objectMapper}" />
+	3、util工具包
+		SysExceptionUtil异常处理类;
+	4、resources资源文件
+		spring.xml spring配置文件；
+
+五、corgi-api 提供APP接口：【默认所有带参数请求都加密，APP加密算法：随机产生AES秘钥；AES加密请求参数生成密文；RSA加密秘钥和密文。】
+	1、annotation包 自定义注解
+		NoNeedParams不需要参数的方法注解;
+		NoNeedToken不需要token的方法注解;
+	2、controller包
+		TestController定义四个RequestMapping例子，分别代表不需要参数的、不需要token的、普通带参请求及上传文件形式；
+	3、interceptor包 拦截器
+		AppInterceptor App端请求拦截器，对基本请求形式及参数进行拦截与转换；
+	4、resources资源文件
+		spring-mvc.xml SpringMVC配置文件；
+
+六、corgi-admin 管理后台：【采用AceAdmin框架 + jqGrid表格结构，并进行部分自我封装】
+	1、annotation包 自定义注解
+		NoNeedLogin不需要登录的方法注解;
+	2、controller包
+		AppController APP管理相关：包括图片管理、版本管理及规则管理；
+		MgrController权限及用户管理相关【整个用户体系采用邮件自我注册及激活，再由admin或有权限的人员进行部门及权限分配】；
+		OrderController订单管理相关；
+		SysController系统管理相关：包括配置管理、分类管理及价格管理；
+	3、interceptor包 拦截器
+		SessionInterceptor 拦截器未登录的请求；
+	4、resources资源文件
+		spring-mvc.xml SpringMVC配置文件；
+	5、webapp
+		static静态资源文件：包括字体、img、js及css相关；
+		WEB-INF/views存储jsp页面；
+
+七、corgi-third 第三方交互模块
+    1、AliPayCallbackController 支付宝支付异步回调处理器；
+    2、WxPayCallbackController 微信支付异步回调处理器；
+    3、WeChatController 微信公众号交互控制器；

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.corgiframework.dao.mapper.MgrUserDepartMapper">
+  <resultMap id="BaseResultMap" type="pers.corgiframework.dao.domain.MgrUserDepart">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="depart_id" jdbcType="INTEGER" property="departId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, depart_id, remark, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="pers.corgiframework.dao.domain.MgrUserDepartExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mgr_user_depart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mgr_user_depart
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mgr_user_depart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="pers.corgiframework.dao.domain.MgrUserDepart">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into mgr_user_depart (user_id, depart_id, remark, 
+      create_time, update_time)
+    values (#{userId,jdbcType=INTEGER}, #{departId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.corgiframework.dao.domain.MgrUserDepart">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into mgr_user_depart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="departId != null">
+        depart_id,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="departId != null">
+        #{departId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.corgiframework.dao.domain.MgrUserDepart">
+    update mgr_user_depart
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="departId != null">
+        depart_id = #{departId,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.corgiframework.dao.domain.MgrUserDepart">
+    update mgr_user_depart
+    set user_id = #{userId,jdbcType=INTEGER},
+      depart_id = #{departId,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByDepart" parameterType="java.lang.Integer" resultType="pers.corgiframework.dao.domain.MgrUser">
+    select t.*
+    from mgr_user t
+    inner join mgr_user_depart mud
+    on t.id=mud.user_id
+    where mud.depart_id = #{departId,jdbcType=INTEGER}
+  </select>
+  <select id="selectUserByDepart" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+    select t.account,t.email,t.real_name as realName,md.cn_name as departName,md.id as departId,md.parent_id as pDepartId
+    from mgr_user t
+    inner join mgr_user_depart mud
+    inner join mgr_depart md
+    on t.id=mud.user_id
+    and mud.depart_id=md.id
+    where mud.depart_id = #{departId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAllUserByDepart" resultType="java.util.HashMap">
+    select t.account,t.email,t.real_name as realName,md.cn_name as departName
+    from mgr_user t
+    inner join mgr_user_depart mud
+    inner join mgr_depart md
+    on t.id=mud.user_id
+    and mud.depart_id=md.id
+  </select>
+  <select id="getUserByUserId" parameterType="java.lang.Integer" resultType="pers.corgiframework.dao.domain.MgrUser">
+    select t.*
+    from mgr_user t
+    inner join mgr_user_depart mud
+    inner join mgr_depart md
+    on md.parent_id = mud.depart_id
+    and md.id = mud.depart_id
+    and t.id=mud.user_id
+    where md.parent_id
+    in (select muds.depart_id
+    from mgr_user_depart muds
+    where muds.user_id= #{userId,jdbcType=INTEGER})
+  </select>
+
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+
+    <!--导入属性配置 -->
+    <properties resource="generator.properties"></properties>
+
+    <!-- 数据库驱动 -->
+    <classPathEntry	location="${jdbc.driver.location}"/>
+    <context id="default" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="${jdbc.master.url}"
+                        userId="${jdbc.master.username}" password="${jdbc.master.password}">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置-->
+        <javaModelGenerator targetPackage="pers.corgiframework.dao.domain" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="pers.corgiframework.dao.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="pers.corgiframework.dao.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 要生成哪些表-->
+        <!--<table schema="dao" tableName="sms_record" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            &lt;!&ndash; 指定时间类型 &ndash;&gt;
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="user" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            &lt;!&ndash; 指定时间类型 &ndash;&gt;
+            <columnOverride column="last_login_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="mgr_user" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="effective_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="last_login_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="mgr_depart" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="mgr_depart_func" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="mgr_func" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="mgr_user_depart" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="app_banner" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="app_rule" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="start_date" javaType="java.time.LocalDate" />
+            <columnOverride column="end_date" javaType="java.time.LocalDate" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="app_version" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>-->
+
+        <!--<table schema="dao" tableName="sys_category" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="sys_price" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+        <table schema="dao" tableName="sys_properties" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>-->
+
+        <table schema="dao" tableName="payment_order" enableCountByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false" >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <columnOverride column="start_date" javaType="java.time.LocalDate" />
+            <columnOverride column="end_date" javaType="java.time.LocalDate" />
+            <columnOverride column="success_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime" />
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime" />
+        </table>
+
+    </context>
+</generatorConfiguration>

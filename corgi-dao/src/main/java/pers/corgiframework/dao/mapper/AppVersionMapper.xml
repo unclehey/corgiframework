@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.corgiframework.dao.mapper.AppVersionMapper">
+  <resultMap id="BaseResultMap" type="pers.corgiframework.dao.domain.AppVersion">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="version_number" jdbcType="VARCHAR" property="versionNumber" />
+    <result column="api_version" jdbcType="VARCHAR" property="apiVersion" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="download_url" jdbcType="VARCHAR" property="downloadUrl" />
+    <result column="operating_system" jdbcType="VARCHAR" property="operatingSystem" />
+    <result column="force_upgrade" jdbcType="INTEGER" property="forceUpgrade" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, version_number, api_version, description, download_url, operating_system, force_upgrade, 
+    create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="pers.corgiframework.dao.domain.AppVersionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from app_version
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_version
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from app_version
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="pers.corgiframework.dao.domain.AppVersion">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into app_version (version_number, api_version, description, 
+      download_url, operating_system, force_upgrade, 
+      create_time, update_time)
+    values (#{versionNumber,jdbcType=VARCHAR}, #{apiVersion,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{downloadUrl,jdbcType=VARCHAR}, #{operatingSystem,jdbcType=VARCHAR}, #{forceUpgrade,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.corgiframework.dao.domain.AppVersion">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into app_version
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="versionNumber != null">
+        version_number,
+      </if>
+      <if test="apiVersion != null">
+        api_version,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="downloadUrl != null">
+        download_url,
+      </if>
+      <if test="operatingSystem != null">
+        operating_system,
+      </if>
+      <if test="forceUpgrade != null">
+        force_upgrade,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="versionNumber != null">
+        #{versionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="apiVersion != null">
+        #{apiVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null">
+        #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="operatingSystem != null">
+        #{operatingSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="forceUpgrade != null">
+        #{forceUpgrade,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.corgiframework.dao.domain.AppVersion">
+    update app_version
+    <set>
+      <if test="versionNumber != null">
+        version_number = #{versionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="apiVersion != null">
+        api_version = #{apiVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null">
+        download_url = #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="operatingSystem != null">
+        operating_system = #{operatingSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="forceUpgrade != null">
+        force_upgrade = #{forceUpgrade,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.corgiframework.dao.domain.AppVersion">
+    update app_version
+    set version_number = #{versionNumber,jdbcType=VARCHAR},
+      api_version = #{apiVersion,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      download_url = #{downloadUrl,jdbcType=VARCHAR},
+      operating_system = #{operatingSystem,jdbcType=VARCHAR},
+      force_upgrade = #{forceUpgrade,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 查询条件 -->
+  <sql id="sqlCondition">
+    <if test="versionNumber != null">
+      AND version_number = #{versionNumber,jdbcType=VARCHAR}
+    </if>
+    <if test="apiVersion != null">
+      AND api_version = #{apiVersion,jdbcType=VARCHAR}
+    </if>
+    <if test="operatingSystem != null">
+      AND operating_system = #{operatingSystem,jdbcType=VARCHAR}
+    </if>
+    <if test="forceUpgrade != null">
+      AND force_upgrade = #{forceUpgrade,jdbcType=INTEGER}
+    </if>
+  </sql>
+
+  <select id="selectListsByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT * FROM app_version WHERE 1=1
+    <include refid="sqlCondition" />
+    ORDER BY create_time DESC limit #{currentPage}, #{pageCount}
+  </select>
+
+  <select id="selectListsCountByCondition" parameterType="java.util.Map" resultType="int">
+    SELECT count(*) FROM app_version WHERE 1=1
+    <include refid="sqlCondition" />
+  </select>
+
+</mapper>

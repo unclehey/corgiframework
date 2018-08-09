@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.corgiframework.dao.mapper.AppBannerMapper">
+  <resultMap id="BaseResultMap" type="pers.corgiframework.dao.domain.AppBanner">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="pic_type" jdbcType="INTEGER" property="picType" />
+    <result column="pic_title" jdbcType="VARCHAR" property="picTitle" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="link_url" jdbcType="VARCHAR" property="linkUrl" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="pic_weight" jdbcType="INTEGER" property="picWeight" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, pic_type, pic_title, pic_url, link_url, status, pic_weight, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="pers.corgiframework.dao.domain.AppBannerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from app_banner
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_banner
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from app_banner
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="pers.corgiframework.dao.domain.AppBanner">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into app_banner (pic_type, pic_title, pic_url, 
+      link_url, status, pic_weight, 
+      create_time, update_time)
+    values (#{picType,jdbcType=INTEGER}, #{picTitle,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, 
+      #{linkUrl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{picWeight,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="pers.corgiframework.dao.domain.AppBanner">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into app_banner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="picType != null">
+        pic_type,
+      </if>
+      <if test="picTitle != null">
+        pic_title,
+      </if>
+      <if test="picUrl != null">
+        pic_url,
+      </if>
+      <if test="linkUrl != null">
+        link_url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="picWeight != null">
+        pic_weight,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="picType != null">
+        #{picType,jdbcType=INTEGER},
+      </if>
+      <if test="picTitle != null">
+        #{picTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null">
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="picWeight != null">
+        #{picWeight,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pers.corgiframework.dao.domain.AppBanner">
+    update app_banner
+    <set>
+      <if test="picType != null">
+        pic_type = #{picType,jdbcType=INTEGER},
+      </if>
+      <if test="picTitle != null">
+        pic_title = #{picTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null">
+        link_url = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="picWeight != null">
+        pic_weight = #{picWeight,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pers.corgiframework.dao.domain.AppBanner">
+    update app_banner
+    set pic_type = #{picType,jdbcType=INTEGER},
+      pic_title = #{picTitle,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      pic_weight = #{picWeight,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!-- 查询条件 -->
+  <sql id="sqlCondition">
+    <if test="picTitle != null">
+      AND pic_title LIKE CONCAT('%', #{picTitle}, '%')
+    </if>
+    <if test="picType != null">
+      AND pic_type = #{picType,jdbcType=INTEGER}
+    </if>
+    <if test="status != null">
+      AND status = #{status,jdbcType=INTEGER}
+    </if>
+  </sql>
+
+  <select id="selectListsByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+    SELECT * FROM app_banner WHERE 1=1
+    <include refid="sqlCondition" />
+    ORDER BY pic_type ASC, pic_weight ASC, create_time DESC
+    limit #{currentPage}, #{pageCount}
+  </select>
+
+  <select id="selectListsCountByCondition" parameterType="java.util.Map" resultType="int">
+    SELECT count(*) FROM app_banner WHERE 1=1
+    <include refid="sqlCondition" />
+  </select>
+
+</mapper>

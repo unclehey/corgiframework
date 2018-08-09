@@ -1,0 +1,50 @@
+/* login error style */
+label.error {
+	font-weight: bold;
+	color: red;
+	padding: 2px 8px;
+	margin-top: 2px;
+}
+
+/* jqgrid table th style */
+.ui-jqgrid .ui-jqgrid-labels th {
+	text-align: center !important;
+}
+
+/* table style */
+.table-style {
+	text-align: center;
+}
+
+body{ overflow: auto !important;} .modal{ overflow: auto !important;}
+
+input::-webkit-input-placeholder { 
+color: #999; 
+font-family : DFKai-SB;
+-webkit-transition: color.5s; 
+} 
+input:focus::-webkit-input-placeholder, input:hover::-webkit-input-placeholder { 
+color: #c2c2c2; 
+-webkit-transition: color.5s; 
+} 
+
+.alert-label{
+	color:red;
+	font-size:13px;
+	font-family:DFKai-SB;
+	margin-left:3px;
+}
+
+/* jqgrid 表格自动换行 */
+.ui-jqgrid tr.jqgrow td {
+	white-space: normal !important;
+	height:auto;
+	padding-top:2px;
+}
+
+.mgr-img{
+	width: auto;
+	height: auto;
+	max-width: 30%;
+	max-height: 20%;
+}
