@@ -4,15 +4,15 @@
 
 二、corgi-tool 工具类
     1、constants常量包
-        BisPromptConstant系统返回状态码及信息常量类；
-        SmsConstant短信常量类；
+		BisPromptConstant系统返回状态码及信息常量类；
+		SmsConstant短信常量类；
     2、enums枚举包
 		MgrFuncEnum后台权限管理枚举类；
 		SysRedisEnum需要配置到数据库的redis缓存枚举类；
     3、utils工具包
-        alipay 支付宝支付相关工具类；
-        wechat 微信相关工具类；
-        AESUtil AES加解密工具类；
+		alipay 支付宝支付相关工具类；
+		wechat 微信相关工具类；
+		AESUtil AES加解密工具类；
 		Base64Util Base64工具类；
 		DateTimeUtil Java8全新日期时间API；
 		FileUtil 文件操作工具类；
@@ -65,13 +65,13 @@
 	3、util工具包
 		SysExceptionUtil异常处理类;
 	4、websocket包
-	    MyHandler WebSocket处理器；
-	    WebSocketInterceptor WebSocket拦截器，获取请求参数；
+		MyHandler WebSocket处理器；
+		WebSocketInterceptor WebSocket拦截器，获取请求参数；
 	5、resources资源文件（spring相关配置文件）；
-	    spring.xml spring配置文件；
-	    spring-mybatis.xml数据库连接池、事务等相关配置；
-	    spring-redis.xml redis配置文件；
-	    spring-mongo.xml mongo配置文件；
+		spring.xml spring配置文件；
+		spring-mybatis.xml数据库连接池、事务等相关配置；
+		spring-redis.xml redis配置文件；
+		spring-mongo.xml mongo配置文件；
 
 五、corgi-api 提供APP接口：【默认所有带参数请求都加密，APP加密算法：随机产生AES秘钥；AES加密请求参数生成密文；RSA加密秘钥和密文。】
 	1、annotation包 自定义注解
