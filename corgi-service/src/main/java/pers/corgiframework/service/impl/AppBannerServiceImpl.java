@@ -29,7 +29,7 @@ public class AppBannerServiceImpl extends BaseServiceImpl<AppBanner> implements 
 
     @Override
     public List<AppBanner> selectAppBannersByCondition(Map<String, Object> map) {
-        List<AppBanner> appBanners = appBannerMapper.selectListsByCondition(map);
+        List<AppBanner> appBanners = appBannerMapper.selectListByCondition(map);
         if (!CollectionUtils.isEmpty(appBanners)) {
             for (AppBanner appBanner : appBanners) {
                 appBanner.setPicUrl(BANNER_URL + appBanner.getPicUrl());

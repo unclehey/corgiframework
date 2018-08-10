@@ -62,9 +62,9 @@ public class OrderController {
         Map<String, Object> responseMap = new HashMap<>();
         try {
             // 订单列表
-            List<PaymentOrder> list = paymentOrderService.selectListsByCondition(filtersMap);
+            List<PaymentOrder> list = paymentOrderService.selectListByCondition(filtersMap);
             // 总的记录条数
-            int totalCount = paymentOrderService.selectListsCountByCondition(filtersMap);
+            int totalCount = paymentOrderService.selectListCountByCondition(filtersMap);
             responseMap.put("records", totalCount);
             int total = (int) Math.ceil((double) totalCount / pageCount);
             responseMap.put("total", total);

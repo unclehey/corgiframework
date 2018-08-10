@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.CollectionUtils;
 import pers.corgiframework.dao.mongo.ApiLog;
 import pers.corgiframework.service.IApiLogService;
+import pers.corgiframework.tool.utils.DateTimeUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,13 +29,18 @@ public class JunitTest {
     @Test
     public void test(){
         try {
-            /*ApiLog apiLog = new ApiLog();
-            apiLog.setUserId(1);
-            apiLog.setMobile("15911186198");
-            apiLog.setParamIn("mongo成功");
+            ApiLog apiLog = new ApiLog();
+            apiLog.setUserId(2);
+            apiLog.setMobile("17600669027");
+            apiLog.setServiceId("idIdentity");
+            apiLog.setParamIn("110110198011235698");
+            apiLog.setParamOut("认证失败");
+            apiLog.setExecTime(987);
+            apiLog.setLogSource(3);
+            apiLog.setStatus(0);
             apiLog.setCreateTime(DateTimeUtil.getNowDateTime());
-            apiLogService.save(apiLog);*/
-            Map<String, Object> map = new HashMap<>();
+            apiLogService.save(apiLog);
+            /*Map<String, Object> map = new HashMap<>();
             // 从第几条开始查询
             map.put("currentPage", 0);
             // 要查询多少条数据
@@ -47,7 +53,7 @@ public class JunitTest {
                 for (ApiLog apiLog : list) {
                     LOGGER.info("手机号 = {}，日志内容 = {}，存储时间 = {}", apiLog.getMobile(), apiLog.getParamIn(), apiLog.getCreateTime());
                 }
-            }
+            }*/
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }

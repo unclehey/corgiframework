@@ -405,9 +405,9 @@ public class MgrController {
         Map<String, Object> responseMap = new HashMap<>();
         try {
             // 后台用户列表
-            List<MgrUser> list = mgrUserService.selectListsByCondition(filtersMap);
+            List<MgrUser> list = mgrUserService.selectListByCondition(filtersMap);
             // 总的记录条数
-            int totalCount = mgrUserService.selectListsCountByCondition(filtersMap);
+            int totalCount = mgrUserService.selectListCountByCondition(filtersMap);
             responseMap.put("records", totalCount);
             int total = (int) Math.ceil((double) totalCount / pageCount);
             responseMap.put("total", total);

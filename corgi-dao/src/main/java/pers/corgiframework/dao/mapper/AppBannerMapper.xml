@@ -193,14 +193,14 @@
     </if>
   </sql>
 
-  <select id="selectListsByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <select id="selectListByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
     SELECT * FROM app_banner WHERE 1=1
     <include refid="sqlCondition" />
     ORDER BY pic_type ASC, pic_weight ASC, create_time DESC
     limit #{currentPage}, #{pageCount}
   </select>
 
-  <select id="selectListsCountByCondition" parameterType="java.util.Map" resultType="int">
+  <select id="selectListCountByCondition" parameterType="java.util.Map" resultType="int">
     SELECT count(*) FROM app_banner WHERE 1=1
     <include refid="sqlCondition" />
   </select>

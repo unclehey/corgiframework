@@ -71,7 +71,7 @@ public class AppController {
             // banner列表
             List<AppBanner> list = appBannerService.selectAppBannersByCondition(filtersMap);
             // 总的记录条数
-            int totalCount = appBannerService.selectListsCountByCondition(filtersMap);
+            int totalCount = appBannerService.selectListCountByCondition(filtersMap);
             responseMap.put("records", totalCount);
             int total = (int) Math.ceil((double) totalCount / pageCount);
             responseMap.put("total", total);
@@ -261,9 +261,9 @@ public class AppController {
         Map<String, Object> responseMap = new HashMap<>();
         try {
             // 规则列表
-            List<AppRule> list = appRuleService.selectListsByCondition(filtersMap);
+            List<AppRule> list = appRuleService.selectListByCondition(filtersMap);
             // 总的记录条数
-            int totalCount = appRuleService.selectListsCountByCondition(filtersMap);
+            int totalCount = appRuleService.selectListCountByCondition(filtersMap);
             responseMap.put("records", totalCount);
             int total = (int) Math.ceil((double) totalCount / pageCount);
             responseMap.put("total", total);
@@ -426,9 +426,9 @@ public class AppController {
         Map<String, Object> responseMap = new HashMap<>();
         try {
             // 版本列表
-            List<AppVersion> list = appVersionService.selectListsByCondition(filtersMap);
+            List<AppVersion> list = appVersionService.selectListByCondition(filtersMap);
             // 总的记录条数
-            int totalCount = appVersionService.selectListsCountByCondition(filtersMap);
+            int totalCount = appVersionService.selectListCountByCondition(filtersMap);
             responseMap.put("records", totalCount);
             int total = (int) Math.ceil((double) totalCount / pageCount);
             responseMap.put("total", total);

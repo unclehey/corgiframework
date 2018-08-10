@@ -36,12 +36,12 @@ public abstract class BaseServiceImpl<T> implements IBaseService<T> {
     }
 
     @Override
-    public List<T> selectListsByCondition(Map<String, Object> map) {
-        return getMapper().selectListsByCondition(map);
+    public List<T> selectListByCondition(Map<String, Object> map) {
+        return getMapper().selectListByCondition(map);
     }
 
     @Override
-    public int selectListsCountByCondition(Map<String, Object> map) {
-        return getMapper().selectListsCountByCondition(map);
+    public int selectListCountByCondition(Map<String, Object> map) {
+        return getMapper().selectListCountByCondition(map);
     }
 }

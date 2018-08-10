@@ -64,7 +64,7 @@ public class TestController {
             map.put("currentPage", 0);
             // 要查询多少条数据
             map.put("pageCount", Integer.MAX_VALUE);
-            List<SmsRecord> smsRecords = smsService.selectListsByCondition(map);
+            List<SmsRecord> smsRecords = smsService.selectListByCondition(map);
             bisPrompt.setBisObj(smsRecords);
         } catch (Exception e) {
             // 系统异常

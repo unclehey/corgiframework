@@ -49,7 +49,7 @@ public class SysPropertiesServiceImpl extends BaseServiceImpl<SysProperties> imp
         map.put("currentPage", 0);
         // 要查询多少条数据
         map.put("pageCount", Integer.MAX_VALUE);
-        List<SysProperties> sysPropertiesList = sysPropertiesMapper.selectListsByCondition(map);
+        List<SysProperties> sysPropertiesList = sysPropertiesMapper.selectListByCondition(map);
         Map<String, Object> sysPropertiesMap = new HashMap<>();
         for(SysProperties sysProperties : sysPropertiesList){
             String key = sysProperties.getPropKey();

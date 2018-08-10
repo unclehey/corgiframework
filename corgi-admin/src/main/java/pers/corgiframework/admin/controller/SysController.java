@@ -71,9 +71,9 @@ public class SysController {
         Map<String, Object> responseMap = new HashMap<>();
         try {
             // 系统配置列表
-            List<SysProperties> list = sysPropertiesService.selectListsByCondition(filtersMap);
+            List<SysProperties> list = sysPropertiesService.selectListByCondition(filtersMap);
             // 总的记录条数
-            int totalCount = sysPropertiesService.selectListsCountByCondition(filtersMap);
+            int totalCount = sysPropertiesService.selectListCountByCondition(filtersMap);
             responseMap.put("records", totalCount);
             int total = (int) Math.ceil((double) totalCount / pageCount);
             responseMap.put("total", total);
@@ -232,9 +232,9 @@ public class SysController {
         Map<String, Object> responseMap = new HashMap<>();
         try {
             // 分类列表
-            List<SysCategory> list = sysCategoryService.selectListsByCondition(filtersMap);
+            List<SysCategory> list = sysCategoryService.selectListByCondition(filtersMap);
             // 总的记录条数
-            int totalCount = sysCategoryService.selectListsCountByCondition(filtersMap);
+            int totalCount = sysCategoryService.selectListCountByCondition(filtersMap);
             responseMap.put("records", totalCount);
             int total = (int) Math.ceil((double) totalCount / pageCount);
             responseMap.put("total", total);
@@ -402,9 +402,9 @@ public class SysController {
         Map<String, Object> responseMap = new HashMap<>();
         try {
             // 价格列表
-            List<SysPrice> list = sysPriceService.selectListsByCondition(filtersMap);
+            List<SysPrice> list = sysPriceService.selectListByCondition(filtersMap);
             // 总的记录条数
-            int totalCount = sysPriceService.selectListsCountByCondition(filtersMap);
+            int totalCount = sysPriceService.selectListCountByCondition(filtersMap);
             responseMap.put("records", totalCount);
             int total = (int) Math.ceil((double) totalCount / pageCount);
             responseMap.put("total", total);

@@ -18,20 +18,8 @@ public class ApiLogServiceImpl extends BaseRepositoryImpl<ApiLog> implements IAp
 
     @Override
     public List<ApiLog> selectListByCondition(Map<String, Object> map) {
-        DBObject dbObject = new BasicDBObject();
-        // 查询条件
-        if (null != map.get("userId")){
-            dbObject.put("userId", map.get("userId"));
-        }
-        if (null != map.get("mobile")){
-            dbObject.put("mobile", map.get("mobile"));
-        }
-        if (null != map.get("serviceId")){
-            dbObject.put("serviceId", map.get("serviceId"));
-        }
-        if (null != map.get("logSource")){
-            dbObject.put("logSource", map.get("logSource"));
-        }
+        // 组装查询条件
+        DBObject dbObject = getQueryDbObject(map);
         Sort sort = new Sort(Sort.Direction.DESC, "createTime");
         Integer currentPage = (Integer) map.get("currentPage");
         Integer pageCount = (Integer) map.get("pageCount");
@@ -40,10 +28,21 @@ public class ApiLogServiceImpl extends BaseRepositoryImpl<ApiLog> implements IAp
 
     @Override
     public long selectListCountByCondition(Map<String, Object> map) {
+        // 组装查询条件
+        DBObject dbObject = getQueryDbObject(map);
+        return this.selectListCountByCondition(dbObject, ApiLog.class);
+    }
+
+    /**
+     * 组装查询条件
+     * @param map
+     * @return
+     */
+    private DBObject getQueryDbObject(Map<String, Object> map) {
         DBObject dbObject = new BasicDBObject();
         // 查询条件
         if (null != map.get("userId")){
-            dbObject.put("userId", map.get("userId"));
+            dbObject.put("userId", Integer.valueOf(String.valueOf(map.get("userId"))));
         }
         if (null != map.get("mobile")){
             dbObject.put("mobile", map.get("mobile"));
@@ -52,8 +51,12 @@ public class ApiLogServiceImpl extends BaseRepositoryImpl<ApiLog> implements IAp
             dbObject.put("serviceId", map.get("serviceId"));
         }
         if (null != map.get("logSource")){
-            dbObject.put("logSource", map.get("logSource"));
+            dbObject.put("logSource", Integer.valueOf(String.valueOf(map.get("logSource"))));
         }
-        return this.selectListCountByCondition(dbObject, ApiLog.class);
+        if (null != map.get("status")){
+            dbObject.put("status", Integer.valueOf(String.valueOf(map.get("status"))));
+        }
+        return dbObject;
     }
+
 }

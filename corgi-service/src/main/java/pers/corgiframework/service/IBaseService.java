@@ -42,12 +42,12 @@ public interface IBaseService<T> {
      * @param map
      * @return
      */
-    List<T> selectListsByCondition(Map<String, Object> map);
+    List<T> selectListByCondition(Map<String, Object> map);
 
     /**
      * 查询数量
      * @param map
      * @return
      */
-    int selectListsCountByCondition(Map<String, Object> map);
+    int selectListCountByCondition(Map<String, Object> map);
 }

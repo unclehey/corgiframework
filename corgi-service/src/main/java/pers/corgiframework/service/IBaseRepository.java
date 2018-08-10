@@ -33,7 +33,6 @@ public interface IBaseRepository<T> {
      */
     long selectListCountByCondition(DBObject queryObject, Class<T> collectionClass);
 
-
     /**
      * 根据特定条件查询指定字段的集合
      * @param queryObject 查询条件

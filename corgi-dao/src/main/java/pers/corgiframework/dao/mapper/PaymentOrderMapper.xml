@@ -399,13 +399,13 @@
     </if>
   </sql>
 
-  <select id="selectListsByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+  <select id="selectListByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
     SELECT * FROM payment_order WHERE 1=1
     <include refid="sqlCondition" />
     ORDER BY create_time DESC limit #{currentPage}, #{pageCount}
   </select>
 
-  <select id="selectListsCountByCondition" parameterType="java.util.Map" resultType="int">
+  <select id="selectListCountByCondition" parameterType="java.util.Map" resultType="int">
     SELECT count(*) FROM payment_order WHERE 1=1
     <include refid="sqlCondition" />
   </select>

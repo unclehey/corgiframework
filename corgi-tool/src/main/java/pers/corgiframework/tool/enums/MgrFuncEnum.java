@@ -71,7 +71,12 @@ public enum MgrFuncEnum {
     FUNC_4("func_4","订单管理","1","", "fa fa-indent"),
     FUNC_4_1("func_4_1", "订单列表", "2", "order/list.do", ""),
     FUNC_4_1_1("func_4_1_1", "订单列表-部分退款", "3", "", ""),
-    FUNC_4_1_2("func_4_1_2", "订单列表-全额退款", "3", "", "");
+    FUNC_4_1_2("func_4_1_2", "订单列表-全额退款", "3", "", ""),
+
+    // 日志短信管理
+    FUNC_5("func_5", "日志短信管理", "1", "", "fa fa-envelope-o"),
+    FUNC_5_1("func_5_1", "Api接口日志", "2", "api/log/list.do", ""),
+    FUNC_5_2("func_5_2", "短信发送记录", "2", "sms/record/list.do", "");
 
     private final String code;
     private final String cnName;

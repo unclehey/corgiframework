@@ -85,6 +85,7 @@
 		NoNeedLogin不需要登录的方法注解;
 	2、controller包
 		AppController APP管理相关：包括图片管理、版本管理及规则管理；
+		LogSmsController 日志短信管理；
 		MgrController权限及用户管理相关【整个用户体系采用邮件自我注册及激活，再由admin或有权限的人员进行部门及权限分配】；
 		OrderController订单管理相关；
 		SysController系统管理相关：包括配置管理、分类管理及价格管理；
