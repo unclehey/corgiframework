@@ -1,4 +1,4 @@
-                                     【corgi】项目 Git init Version 1.0
+                                     【CorgiFramework】项目 Git init Version 1.0
 
 1、项目简介：  【CorgiFramework】由本人历年来的项目经历总结所得。
 
