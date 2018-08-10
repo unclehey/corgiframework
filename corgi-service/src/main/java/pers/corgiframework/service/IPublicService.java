@@ -3,6 +3,7 @@ package pers.corgiframework.service;
 import pers.corgiframework.dao.model.BisPrompt;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,5 +66,18 @@ public interface IPublicService {
      * @param filePath
      */
     void sendAttachmentMail(String to, String title, String filePath);
+
+    /**
+     * 向所有在线用户推送WebSocket消息
+     * @param message
+     */
+    void pushWSMessageForAllUsers(String message);
+
+    /**
+     * 向指定在线用户推送WebSocket消息
+     * @param userIds
+     * @param message
+     */
+    void pushWSMessageForSpecifyUsers(List<Integer> userIds, String message);
 
 }

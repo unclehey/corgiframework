@@ -40,9 +40,7 @@
 		config.properties系统配置文件；
 		generator.properties、generatorConfig.xml mybatis自动生成配置文件：idea命令mybatis-generator:generate -e；
 		logback.xml日志配置文件；
-		spring-mybatis.xml数据库连接池、事务等相关配置；
-		spring-redis.xml redis配置文件；
-		spring-mongo.xml mongo配置文件；
+		wx_pay.p12微信支付证书（资金流出使用如：微信退款）；
 
 四、corgi-service 服务层
 	1、service包
@@ -66,19 +64,26 @@
 		<property name="objectMapper" value="#{jsonTransfer.objectMapper}" />
 	3、util工具包
 		SysExceptionUtil异常处理类;
-	4、resources资源文件
+	4、websocket包
+	    MyHandler WebSocket处理器；
+	    WebSocketInterceptor WebSocket拦截器，获取请求参数；
+	5、resources资源文件（spring相关配置文件）；
 		spring.xml spring配置文件；
+        spring-mybatis.xml数据库连接池、事务等相关配置；
+        spring-redis.xml redis配置文件；
+        spring-mongo.xml mongo配置文件；
 
 五、corgi-api 提供APP接口：【默认所有带参数请求都加密，APP加密算法：随机产生AES秘钥；AES加密请求参数生成密文；RSA加密秘钥和密文。】
 	1、annotation包 自定义注解
 		NoNeedParams不需要参数的方法注解;
 		NoNeedToken不需要token的方法注解;
 	2、controller包
-		TestController定义四个RequestMapping例子，分别代表不需要参数的、不需要token的、普通带参请求及上传文件形式；
+		TestController定义几个RequestMapping例子，分别代表不需要参数的、不需要token的、普通带参请求及上传文件形式等；
 	3、interceptor包 拦截器
 		AppInterceptor App端请求拦截器，对基本请求形式及参数进行拦截与转换；
 	4、resources资源文件
 		spring-mvc.xml SpringMVC配置文件；
+		spring-websocket.xml websocket配置文件；
 
 六、corgi-admin 管理后台：【采用AceAdmin框架 + jqGrid表格结构，并进行部分自我封装】
 	1、annotation包 自定义注解

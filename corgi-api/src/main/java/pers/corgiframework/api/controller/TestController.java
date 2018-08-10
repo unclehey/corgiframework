@@ -15,6 +15,7 @@ import pers.corgiframework.dao.domain.SmsRecord;
 import pers.corgiframework.dao.domain.SysPrice;
 import pers.corgiframework.dao.model.BisPrompt;
 import pers.corgiframework.service.IPaymentOrderService;
+import pers.corgiframework.service.IPublicService;
 import pers.corgiframework.service.ISmsService;
 import pers.corgiframework.service.ISysPriceService;
 import pers.corgiframework.tool.constants.BisPromptConstant;
@@ -25,6 +26,7 @@ import pers.corgiframework.tool.utils.StringUtil;
 import pers.corgiframework.util.SysExceptionUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +54,8 @@ public class TestController {
     private IPaymentOrderService paymentOrderService;
     @Autowired
     private ISysPriceService sysPriceService;
+    @Autowired
+    private IPublicService publicService;
 
     @NoNeedParams
     @RequestMapping(value = "/NoNeedParams")
@@ -165,6 +169,28 @@ public class TestController {
             // 系统异常
             return SysExceptionUtil.response(e);
         }
+    }
+
+    @NoNeedParams
+    @RequestMapping(value = "/websocket")
+    public Object websocket(){
+        // 返回给移动端的信息
+        BisPrompt bisPrompt = new BisPrompt();
+        try {
+            publicService.pushWSMessageForAllUsers("向所有在线用户推送的第一条消息");
+            List<Integer> userIds = new ArrayList<>();
+            userIds.add(1);
+            userIds.add(2);
+            userIds.add(3);
+            userIds.add(4);
+            publicService.pushWSMessageForSpecifyUsers(userIds, "向登录用户推送的第一条消息");
+        } catch (Exception e) {
+            // 系统异常
+            LOGGER.error(e.getMessage(), e);
+            bisPrompt.setBisStatus(BisPromptConstant.SYSTEM_EXCEPTION_STATUS);
+            bisPrompt.setBisMsg(BisPromptConstant.BISPROMPT_MAP.get(BisPromptConstant.SYSTEM_EXCEPTION_STATUS));
+        }
+        return bisPrompt;
     }
 
 }

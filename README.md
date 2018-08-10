@@ -2,7 +2,7 @@
 
 1、项目简介：  【corgi】个人项目。
 
-2、功能特性：   整个项目采用ssm + Maven + Git + AceAdmin + jqGrid + mysql + mongodb + redis框架。
+2、功能特性：   整个项目采用SSM + Maven + Git + AceAdmin + jqGrid + mysql + mongodb + redis框架。
 
 3、目录结构：   corgi-api 提供APP接口：【APP加密算法：随机产生AES秘钥；AES加密请求参数生成密文；RSA加密秘钥和密文。】；
                 corgi-admin 管理后台：采用AceAdmin框架 + jqGrid表格结构，并进行部分自我封装；

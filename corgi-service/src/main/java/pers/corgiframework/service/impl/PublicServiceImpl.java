@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.TextMessage;
 import pers.corgiframework.dao.domain.SmsRecord;
 import pers.corgiframework.dao.model.BisPrompt;
 import pers.corgiframework.service.IPublicService;
@@ -17,6 +18,7 @@ import pers.corgiframework.tool.utils.DateTimeUtil;
 import pers.corgiframework.tool.utils.JsonUtil;
 import pers.corgiframework.tool.utils.PropertiesUtil;
 import pers.corgiframework.tool.utils.StringUtil;
+import pers.corgiframework.websocket.MyHandler;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -48,6 +50,8 @@ public class PublicServiceImpl implements IPublicService {
     private IRedisService redisService;
     @Autowired
     private ISmsService smsService;
+    @Autowired
+    private MyHandler myHandler;
 
     @Override
     public Map<String, Object> assembleSearchConditions(String pageNo, int pageCount) {
@@ -271,4 +275,15 @@ public class PublicServiceImpl implements IPublicService {
         }
     }
 
+    @Override
+    @Async
+    public void pushWSMessageForAllUsers(String message) {
+        myHandler.sendMessageToAllUsers(new TextMessage(message));
+    }
+
+    @Override
+    @Async
+    public void pushWSMessageForSpecifyUsers(List<Integer> userIds, String message) {
+        myHandler.sendMessageToUser(userIds, new TextMessage(message));
+    }
 }
