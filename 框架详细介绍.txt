@@ -3,13 +3,13 @@
 一、corgi.sql初始化sql脚本【database字符集utf8mb4，排序规则utf8mb4_unicode_ci，支持Emoji表情】。
 
 二、corgi-tool 工具类
-    1、constants常量包
+	1、constants常量包
 		BisPromptConstant系统返回状态码及信息常量类；
 		SmsConstant短信常量类；
-    2、enums枚举包
+	2、enums枚举包
 		MgrFuncEnum后台权限管理枚举类；
 		SysRedisEnum需要配置到数据库的redis缓存枚举类；
-    3、utils工具包
+	3、utils工具包
 		alipay 支付宝支付相关工具类；
 		wechat 微信相关工具类；
 		AESUtil AES加解密工具类；
