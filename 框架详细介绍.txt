@@ -86,7 +86,7 @@
 		spring-websocket.xml websocket配置文件；
 
 六、corgi-admin 管理后台：【采用AceAdmin框架 + jqGrid表格结构，并进行部分自我封装】
-    1、annotation包 自定义注解
+	1、annotation包 自定义注解
 		NoNeedLogin不需要登录的方法注解;
 	2、controller包
 		AppController APP管理相关：包括图片管理、版本管理及规则管理；
@@ -103,6 +103,6 @@
 		WEB-INF/views存储jsp页面；
 
 七、corgi-third 第三方交互模块
-    1、AliPayCallbackController 支付宝支付异步回调处理器；
-    2、WxPayCallbackController 微信支付异步回调处理器；
-    3、WeChatController 微信公众号交互控制器；
+	1、AliPayCallbackController 支付宝支付异步回调处理器；
+	2、WxPayCallbackController 微信支付异步回调处理器；
+	3、WeChatController 微信公众号交互控制器；
