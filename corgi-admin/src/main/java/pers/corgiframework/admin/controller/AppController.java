@@ -1,5 +1,6 @@
 package pers.corgiframework.admin.controller;
 
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,6 @@ import pers.corgiframework.tool.utils.PropertiesUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +66,7 @@ public class AppController {
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);
         // 返回数据
-        Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> responseMap = Maps.newHashMap();
         try {
             // banner列表
             List<AppBanner> list = appBannerService.selectAppBannersByCondition(filtersMap);
@@ -87,7 +87,7 @@ public class AppController {
     @RequestMapping("/banner/upload")
     @ResponseBody
     public Object bannerUpload(@RequestParam MultipartFile addAttr) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = Maps.newHashMap();
         try {
             if (null != addAttr) {
                 // 调用图片上传工具类
@@ -104,7 +104,7 @@ public class AppController {
     @RequestMapping("/banner/upload/update")
     @ResponseBody
     public Object bannerUploadUpdate(@RequestParam MultipartFile updAddAttr) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = Maps.newHashMap();
         try {
             if (null != updAddAttr) {
                 // 调用图片上传工具类
@@ -258,7 +258,7 @@ public class AppController {
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);
         // 返回数据
-        Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> responseMap = Maps.newHashMap();
         try {
             // 规则列表
             List<AppRule> list = appRuleService.selectListByCondition(filtersMap);
@@ -423,7 +423,7 @@ public class AppController {
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);
         // 返回数据
-        Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> responseMap = Maps.newHashMap();
         try {
             // 版本列表
             List<AppVersion> list = appVersionService.selectListByCondition(filtersMap);

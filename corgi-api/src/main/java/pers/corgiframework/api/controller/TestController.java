@@ -1,5 +1,7 @@
 package pers.corgiframework.api.controller;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +28,6 @@ import pers.corgiframework.tool.utils.StringUtil;
 import pers.corgiframework.util.SysExceptionUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +63,7 @@ public class TestController {
         // 返回给移动端的信息
         BisPrompt bisPrompt = new BisPrompt();
         try {
-            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> map = Maps.newHashMap();
             // 从第几条开始查询
             map.put("currentPage", 0);
             // 要查询多少条数据
@@ -178,7 +178,7 @@ public class TestController {
         BisPrompt bisPrompt = new BisPrompt();
         try {
             publicService.pushWSMessageForAllUsers("向所有在线用户推送的第一条消息");
-            List<Integer> userIds = new ArrayList<>();
+            List<Integer> userIds = Lists.newArrayList();
             userIds.add(1);
             userIds.add(2);
             userIds.add(3);

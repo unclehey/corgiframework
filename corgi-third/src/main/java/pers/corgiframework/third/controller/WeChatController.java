@@ -1,5 +1,6 @@
 package pers.corgiframework.third.controller;
 
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -322,7 +322,7 @@ public class WeChatController {
             crypt.update(string1.getBytes("UTF-8"));
             signature = WeixinUtil.byteToHex(crypt.digest());
             // 组装参数传给页面
-            Map<String, String> ret = new HashMap<>();
+            Map<String, String> ret = Maps.newHashMap();
             ret.put("url", url);
             ret.put("jsapi_ticket", jat.getTicket());
             ret.put("nonceStr", nonce_str);

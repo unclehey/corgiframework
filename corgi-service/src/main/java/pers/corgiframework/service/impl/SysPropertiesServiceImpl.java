@@ -1,5 +1,7 @@
 package pers.corgiframework.service.impl;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.corgiframework.dao.domain.SysProperties;
@@ -9,8 +11,6 @@ import pers.corgiframework.dao.mapper.SysPropertiesMapper;
 import pers.corgiframework.service.ISysPropertiesService;
 import pers.corgiframework.tool.enums.SysRedisEnum;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,15 +42,15 @@ public class SysPropertiesServiceImpl extends BaseServiceImpl<SysProperties> imp
 
     @Override
     public List<Map<String, Object>> getSysPropertiesNotInSql() {
-        List<Map<String, Object>> propertiesList = new ArrayList<>();
+        List<Map<String, Object>> propertiesList = Lists.newArrayList();
         // 查询系统配置列表
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = Maps.newHashMap();
         // 从第几条开始查询
         map.put("currentPage", 0);
         // 要查询多少条数据
         map.put("pageCount", Integer.MAX_VALUE);
         List<SysProperties> sysPropertiesList = sysPropertiesMapper.selectListByCondition(map);
-        Map<String, Object> sysPropertiesMap = new HashMap<>();
+        Map<String, Object> sysPropertiesMap = Maps.newHashMap();
         for(SysProperties sysProperties : sysPropertiesList){
             String key = sysProperties.getPropKey();
             String value = sysProperties.getPropValue();
@@ -62,7 +62,7 @@ public class SysPropertiesServiceImpl extends BaseServiceImpl<SysProperties> imp
             String propKey = enums[i].getKey();
             String description = enums[i].getDescription();
             if (!sysPropertiesMap.containsKey(propKey)) {
-                Map<String, Object> propertiesMap = new HashMap<>();
+                Map<String, Object> propertiesMap = Maps.newHashMap();
                 propertiesMap.put("propKey", propKey);
                 propertiesMap.put("description", description);
                 propertiesList.add(propertiesMap);

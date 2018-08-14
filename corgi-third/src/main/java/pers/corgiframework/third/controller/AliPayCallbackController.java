@@ -2,6 +2,7 @@ package pers.corgiframework.third.controller;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import pers.corgiframework.tool.utils.PropertiesUtil;
 import pers.corgiframework.tool.utils.alipay.AliPayTradeStatus;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -35,7 +35,7 @@ public class AliPayCallbackController {
     @PostMapping(value = "/alipay/notify")
     public String notify(HttpServletRequest request) {
         // 获取支付宝POST过来反馈信息
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = Maps.newHashMap();
         Map requestParams = request.getParameterMap();
         for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
             String name = (String) iter.next();

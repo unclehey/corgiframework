@@ -1,12 +1,16 @@
 package pers.corgiframework.tool.utils;
 
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pers.corgiframework.tool.constants.PayConstant;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
 
 /**
  * 支付工具类
@@ -24,7 +28,7 @@ public class PayUtil {
     public static String assembleNoSignParamsBySort(Map<String, String> params) {
         StringBuffer sb = new StringBuffer();
         try {
-            SortedMap<String, String> sortParams = new TreeMap<>();
+            SortedMap<String, String> sortParams = Maps.newTreeMap();
             sortParams.putAll(params);
             Set entrySet = sortParams.entrySet();
             Iterator iterator = entrySet.iterator();
@@ -66,7 +70,7 @@ public class PayUtil {
         // 交易金额 转化成分
         String total_fee = String.valueOf(new BigDecimal(amount).multiply(new BigDecimal("100")).intValue());
         // 拼接生成预支付交易单参数
-        Map<String, String> params = new HashMap<>();
+        Map<String, String> params = Maps.newHashMap();
         params.put("appid", appid);
         params.put("mch_id", mch_id);
         params.put("nonce_str", nonce_str);
@@ -111,7 +115,7 @@ public class PayUtil {
         String total_fee = String.valueOf(totalAmount.multiply(new BigDecimal("100")).intValue());
         String refund_fee = String.valueOf(refundAmount.multiply(new BigDecimal("100")).intValue());
         // 拼接生成预支付交易单参数
-        Map<String, String> params = new HashMap<>();
+        Map<String, String> params = Maps.newHashMap();
         params.put("appid", appId);
         params.put("mch_id", mchId);
         params.put("nonce_str", nonce_str);
@@ -142,7 +146,7 @@ public class PayUtil {
         // 生成时间戳
         String timestamp = StringUtil.createTimestamp();
         // 拼接生成预支付交易单参数
-        Map<String, String> params = new HashMap<>();
+        Map<String, String> params = Maps.newHashMap();
         params.put("appid", appid);
         params.put("partnerid", mch_id);
         params.put("prepayid", prepay_id);
@@ -171,7 +175,7 @@ public class PayUtil {
         // 生成时间戳
         String timestamp = StringUtil.createTimestamp();
         //签名所需参数
-        Map<String, String> signParams = new HashMap<>();
+        Map<String, String> signParams = Maps.newHashMap();
         signParams.put("appId", appid);
         signParams.put("timeStamp", timestamp);
         signParams.put("nonceStr", noncestr);

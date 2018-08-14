@@ -1,5 +1,6 @@
 package pers.corgiframework.admin.controller;
 
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -402,7 +402,7 @@ public class MgrController {
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);
         // 返回数据
-        Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> responseMap = Maps.newHashMap();
         try {
             // 后台用户列表
             List<MgrUser> list = mgrUserService.selectListByCondition(filtersMap);
@@ -818,7 +818,7 @@ public class MgrController {
     		departList = mgrUserDepartService.getUserByUserId(String.valueOf(userId));
     	}*/
         List<MgrUser> checkedList = mgrUserDepartService.getUserByDepart(departId);
-        Map<String, Object> departMap = new HashMap<String, Object>();
+        Map<String, Object> departMap = Maps.newHashMap();
         departMap.put("departList", departList);
         departMap.put("checkedList", checkedList);
         try {
@@ -844,7 +844,7 @@ public class MgrController {
         if (!"admin".equals(account)) {
             result = mgrDepartService.isMyDepart(Integer.parseInt(departId), userId);
         }
-        Map<String, Object> departMap = new HashMap<String, Object>();
+        Map<String, Object> departMap = Maps.newHashMap();
         departMap.put("result", result);
         try {
             return result.toString();

@@ -1,18 +1,24 @@
+# Maven
+target/
+*.ser
+*.ec
+
+# IntelliJ IDEA
 .idea/
+out/
+*.ipr
+*.iws
 *.iml
 
+# Eclipse
+.classpath
+.project
 .settings/
-*.project
-*.classpath
+.metadata/
+
+# OS X
 .DS_Store
+
+# user defined
 *.log
-
-bin/
-temp-target/
-target/
-
-
-# Temporary Files
-*~
-.*.swp
-.DS_STORE
+*.log.zip

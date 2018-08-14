@@ -3,10 +3,14 @@ package pers.corgiframework.tool.utils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Json工具类
@@ -70,9 +74,9 @@ public class JsonUtil {
         JSONObject jsonObj = JSONObject.parseObject(responseMessage);
         JSONArray jsonArray = jsonObj.getJSONArray("rules");
         Iterator<Object> iterator = jsonArray.iterator();
-        List<Map<String, String>> filters = new ArrayList<>();
+        List<Map<String, String>> filters = Lists.newArrayList();
         while (iterator.hasNext()) {
-            Map<String, String> map = new HashMap<>();
+            Map<String, String> map = Maps.newHashMap();
             JSONObject obj = (JSONObject) iterator.next();
             map.put(obj.getString("field"), obj.getString("data"));
             filters.add(map);
@@ -87,7 +91,7 @@ public class JsonUtil {
      * @return
      */
     public static Map<String, String> parseJsonToMap(String responseMessage) {
-        Map<String, String> responseMap = new HashMap<>();
+        Map<String, String> responseMap = Maps.newHashMap();
         JSONObject jsonObj = JSONObject.parseObject(responseMessage);
         Map firstMap = (Map) jsonObj;
         Iterator<Map.Entry<String, Object>> firstIterator = firstMap.entrySet().iterator();

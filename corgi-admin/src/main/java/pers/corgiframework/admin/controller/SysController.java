@@ -1,5 +1,6 @@
 package pers.corgiframework.admin.controller;
 
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +68,7 @@ public class SysController {
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);
         // 返回数据
-        Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> responseMap = Maps.newHashMap();
         try {
             // 系统配置列表
             List<SysProperties> list = sysPropertiesService.selectListByCondition(filtersMap);
@@ -229,7 +229,7 @@ public class SysController {
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);
         // 返回数据
-        Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> responseMap = Maps.newHashMap();
         try {
             // 分类列表
             List<SysCategory> list = sysCategoryService.selectListByCondition(filtersMap);
@@ -355,7 +355,7 @@ public class SysController {
             if (null != addAttr) {
                 // 调用图片上传工具类
                 String fileName = FileUtil.upload(addAttr, null, CATEGORY_PATH);
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = Maps.newHashMap();
                 map.put("result", 1);
                 map.put("url", fileName);
                 response.getWriter().write(JsonUtil.objectToJson(map));
@@ -371,7 +371,7 @@ public class SysController {
             if (null != addAttrUpd) {
                 // 调用图片上传工具类
                 String fileName = FileUtil.upload(addAttrUpd, null, CATEGORY_PATH);
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = Maps.newHashMap();
                 map.put("result", 1);
                 map.put("url", fileName);
                 response.getWriter().write(JsonUtil.objectToJson(map));
@@ -399,7 +399,7 @@ public class SysController {
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);
         // 返回数据
-        Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> responseMap = Maps.newHashMap();
         try {
             // 价格列表
             List<SysPrice> list = sysPriceService.selectListByCondition(filtersMap);

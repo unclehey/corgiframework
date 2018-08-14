@@ -1,5 +1,6 @@
 package pers.corgiframework.tool.utils;
 
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,7 +11,6 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -56,7 +56,7 @@ public class RSAUtil {
             KeyPair keyPair = keyPairGen.generateKeyPair();
             RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
             RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-            Map<String, Object> keyMap = new HashMap<>(2);
+            Map<String, Object> keyMap = Maps.newHashMap();
             keyMap.put(PUBLIC_KEY, publicKey);
             keyMap.put(PRIVATE_KEY, privateKey);
             return keyMap;

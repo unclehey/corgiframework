@@ -16,6 +16,7 @@
 	<import resource="spring-redis.xml" />
 	<import resource="spring-mybatis.xml" />
 	<import resource="spring-mongo.xml" />
+	<import resource="spring-websocket.xml" />
 
 	<!-- 自动扫描依赖将其注入为bean -->
 	<context:component-scan base-package="pers.corgiframework.service, pers.corgiframework.transfer" />

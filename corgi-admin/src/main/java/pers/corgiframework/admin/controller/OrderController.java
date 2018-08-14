@@ -1,5 +1,6 @@
 package pers.corgiframework.admin.controller;
 
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,6 @@ import pers.corgiframework.tool.utils.PropertiesUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +59,7 @@ public class OrderController {
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);
         // 返回数据
-        Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> responseMap = Maps.newHashMap();
         try {
             // 订单列表
             List<PaymentOrder> list = paymentOrderService.selectListByCondition(filtersMap);

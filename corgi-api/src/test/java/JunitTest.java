@@ -1,3 +1,4 @@
+import com.google.common.collect.Maps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -9,7 +10,6 @@ import org.springframework.util.CollectionUtils;
 import pers.corgiframework.dao.mongo.ApiLog;
 import pers.corgiframework.service.IApiLogService;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +38,7 @@ public class JunitTest {
             apiLog.setStatus(0);
             apiLog.setCreateTime(DateTimeUtil.getNowDateTime());
             apiLogService.save(apiLog);*/
-            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> map = Maps.newHashMap();
             // 从第几条开始查询
             map.put("currentPage", 0);
             // 要查询多少条数据

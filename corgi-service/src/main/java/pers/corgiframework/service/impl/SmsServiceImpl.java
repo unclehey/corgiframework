@@ -1,5 +1,6 @@
 package pers.corgiframework.service.impl;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,6 @@ import pers.corgiframework.tool.utils.DateTimeUtil;
 import pers.corgiframework.tool.utils.SmsUtil;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -100,7 +100,7 @@ public class SmsServiceImpl extends BaseServiceImpl<SmsRecord> implements ISmsSe
 
     @Override
     public List<SmsRecord> getSmsRecordsLimitByMobile(String mobile) {
-        List<Integer> typeList = new ArrayList<>();
+        List<Integer> typeList = Lists.newArrayList();
         typeList.add(SmsConstant.VERIFY_CODE);
         typeList.add(SmsConstant.FORGET_PASS);
         String nowDate = DateTimeUtil.getNowDate(DateTimeUtil.FORMAT_SHORT_LINE);

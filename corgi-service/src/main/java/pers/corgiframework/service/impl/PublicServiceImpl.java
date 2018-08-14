@@ -1,5 +1,6 @@
 package pers.corgiframework.service.impl;
 
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +56,7 @@ public class PublicServiceImpl implements IPublicService {
 
     @Override
     public Map<String, Object> assembleSearchConditions(String pageNo, int pageCount) {
-        Map<String, Object> filtersMap = new HashMap<>();
+        Map<String, Object> filtersMap = Maps.newHashMap();
         int curpage = 1;
         if (StringUtils.isNotBlank(pageNo) && Integer.valueOf(pageNo) > 0) {
             curpage = Integer.parseInt(pageNo);
@@ -79,7 +80,7 @@ public class PublicServiceImpl implements IPublicService {
         if (StringUtils.isNotBlank(filters)) {
             requestList = JsonUtil.parseJsonToListForMgr(filters);
         }
-        Map<String, Object> filtersMap = new HashMap<>();
+        Map<String, Object> filtersMap = Maps.newHashMap();
         // 默认每页显示20条数据
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);

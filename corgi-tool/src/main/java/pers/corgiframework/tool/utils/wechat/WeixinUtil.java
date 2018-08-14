@@ -1,6 +1,7 @@
 package pers.corgiframework.tool.utils.wechat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -34,7 +35,6 @@ import java.net.ConnectException;
 import java.net.URL;
 import java.security.KeyStore;
 import java.util.Formatter;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -250,7 +250,7 @@ public class WeixinUtil {
             instream.close();
         }
         String reponseStr = "";
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = Maps.newHashMap();
         // Trust own CA and all self-signed certs
         SSLContext sslcontext = SSLContexts.custom()
                 .loadKeyMaterial(keyStore, mchId.toCharArray())

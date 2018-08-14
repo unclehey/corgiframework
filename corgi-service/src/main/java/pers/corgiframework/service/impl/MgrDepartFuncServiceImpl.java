@@ -1,5 +1,6 @@
 package pers.corgiframework.service.impl;
 
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import pers.corgiframework.tool.utils.DateTimeUtil;
 import pers.corgiframework.tool.utils.JsonUtil;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,8 +80,8 @@ public class MgrDepartFuncServiceImpl implements IMgrDepartFuncService {
     public void givePerm(String funcIds, String departId){
         //1、解析传入的功能列表
         List funcIdsList = JsonUtil.readValue(funcIds, List.class);
-        Map<Integer, Integer> funcMap = new HashMap<Integer, Integer>();
-        Map<Integer, Integer> funcMapNew = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> funcMap = Maps.newHashMap();
+        Map<Integer, Integer> funcMapNew = Maps.newHashMap();
 
         //2、获取功能部门关联
         List<MgrDepartFunc> funcList = this.getByDepart(departId);

@@ -2,6 +2,7 @@ package pers.corgiframework.api.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -128,7 +128,7 @@ public class AppInterceptor extends HandlerInterceptorAdapter {
         String contentType = request.getContentType();
         if (null != contentType) {
             try {
-                Map<String, String> resMap = new HashMap<>();
+                Map<String, String> resMap = Maps.newHashMap();
                 if (contentType.contains("application/json")) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
                     StringBuffer sb = new StringBuffer();
@@ -146,7 +146,7 @@ public class AppInterceptor extends HandlerInterceptorAdapter {
                         String rsaStr = new String(RSAUtil.decryptByPrivateKey(temp, RSAUtil.DEFAULT_PRIVATE_KEY), request.getCharacterEncoding());
                         // 转成Json对象
                         JSONObject jsonObject = JSONObject.parseObject(rsaStr);
-                        Map<String, String> aesMap = new HashMap<>();
+                        Map<String, String> aesMap = Maps.newHashMap();
                         Iterator<Map.Entry<String, Object>> iterator = jsonObject.entrySet().iterator();
                         while (iterator.hasNext()) {
                             Map.Entry<String, Object> param = iterator.next();

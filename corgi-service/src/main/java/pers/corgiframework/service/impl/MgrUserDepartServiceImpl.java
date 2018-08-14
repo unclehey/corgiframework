@@ -1,5 +1,7 @@
 package pers.corgiframework.service.impl;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.corgiframework.dao.domain.*;
@@ -12,8 +14,6 @@ import pers.corgiframework.tool.utils.DateTimeUtil;
 import pers.corgiframework.tool.utils.JsonUtil;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -108,13 +108,13 @@ public class MgrUserDepartServiceImpl implements IMgrUserDepartService {
     @Override
     public List<MgrUser> getUserByUserId(String userId){
         List<MgrUserDepart> mgrUserDepartList = this.getByUser(Integer.parseInt(userId));
-        List<MgrDepart> mgrDepartList = new ArrayList<MgrDepart>();
+        List<MgrDepart> mgrDepartList = Lists.newArrayList();
         for(MgrUserDepart mgrUserDepart: mgrUserDepartList){
             Integer departId = mgrUserDepart.getDepartId();
             mgrDepartList.addAll(mgrDepartService.getAllByProId(departId));
         }
 
-        List<Integer> departIdList = new ArrayList<Integer>();
+        List<Integer> departIdList = Lists.newArrayList();
         for(MgrDepart mgrDepart: mgrDepartList){
             Integer departId = mgrDepart.getId();
             departIdList.add(departId);
@@ -124,7 +124,7 @@ public class MgrUserDepartServiceImpl implements IMgrUserDepartService {
         mgrUserDepartExample.createCriteria().andDepartIdIn(departIdList);
         List<MgrUserDepart> userDepartList = mgrUserDepartMapper.selectByExample(mgrUserDepartExample);
 
-        List<Integer> userIdList = new ArrayList<Integer>();
+        List<Integer> userIdList = Lists.newArrayList();
         for(MgrUserDepart mgrUserDepart: userDepartList){
             Integer userIdResult = mgrUserDepart.getUserId();
             userIdList.add(userIdResult);
@@ -143,14 +143,14 @@ public class MgrUserDepartServiceImpl implements IMgrUserDepartService {
     public List<Map<String,Object>> getDepartUserByUserId(String userId){
 
         List<MgrUserDepart> mgrUserDepartList = this.getByUser(Integer.parseInt(userId));
-        List<Map<String, Object>> departUserList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> departUserList = Lists.newArrayList();
 
         for(MgrUserDepart mgrUserDepart: mgrUserDepartList){
             Integer departId = mgrUserDepart.getDepartId();
             this.getAllUserByParentDepartId(departUserList, departId);
         }
 
-        Map<Object, Map<String, Object>> departUserMap = new HashMap<Object, Map<String, Object>>();
+        Map<Object, Map<String, Object>> departUserMap = Maps.newHashMap();
         for(Map<String, Object> departUser: departUserList){
             Object account = departUser.get("account");
             Object departName = departUser.get("departName");
@@ -187,7 +187,7 @@ public class MgrUserDepartServiceImpl implements IMgrUserDepartService {
 
         List<Map<String, Object>> departUserList = mgrUserDepartMapper.selectAllUserByDepart();
 
-        Map<Object, Map<String, Object>> departUserMap = new HashMap<Object, Map<String, Object>>();
+        Map<Object, Map<String, Object>> departUserMap = Maps.newHashMap();
         for(Map<String, Object> departUser: departUserList){
             Object account = departUser.get("account");
             Object departName = departUser.get("departName");
@@ -234,8 +234,8 @@ public class MgrUserDepartServiceImpl implements IMgrUserDepartService {
         //2、通过部门id获取所有部门用户关联
         List<MgrUserDepart> userList = this.getByDepart(departId);
 
-        Map<Integer, Integer> userMap = new HashMap<Integer, Integer>();
-        Map<Integer, Integer> userMapNew = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> userMap = Maps.newHashMap();
+        Map<Integer, Integer> userMapNew = Maps.newHashMap();
 
         //3、循环用户部门关联列表并放入map中
         for(MgrUserDepart mgrUserDepart: userList){

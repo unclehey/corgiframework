@@ -1,5 +1,6 @@
 package pers.corgiframework.admin.controller;
 
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import pers.corgiframework.service.IPublicService;
 import pers.corgiframework.service.ISmsService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +49,7 @@ public class LogSmsController {
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);
         // 返回数据
-        Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> responseMap = Maps.newHashMap();
         try {
             // 短信发送记录
             List<SmsRecord> list = smsService.selectListByCondition(filtersMap);
@@ -86,7 +86,7 @@ public class LogSmsController {
         int curpage = Integer.parseInt(page);
         int pageCount = Integer.parseInt(rows);
         // 返回数据
-        Map<String, Object> responseMap = new HashMap<>();
+        Map<String, Object> responseMap = Maps.newHashMap();
         try {
             // 日志列表
             List<ApiLog> list = apiLogService.selectListByCondition(filtersMap);

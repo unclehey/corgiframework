@@ -1,5 +1,7 @@
 package pers.corgiframework.service.impl;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.corgiframework.dao.domain.*;
@@ -12,8 +14,6 @@ import pers.corgiframework.tool.enums.MgrFuncEnum;
 import pers.corgiframework.tool.utils.DateTimeUtil;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -130,7 +130,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
     public Map<String, Map<String, Object>> getByUserIdToMap(Integer userId){
 
         List<MgrFunc> mgrFuncList = mgrFuncMapper.getByUserId(userId);
-        Map<String, Map<String, Object>> mgrFuncs = new HashMap<String,Map<String, Object>>();
+        Map<String, Map<String, Object>> mgrFuncs = Maps.newHashMap();
         for(MgrFunc mgrFunc: mgrFuncList){
             Integer funcId = mgrFunc.getId();
             Integer parentId = mgrFunc.getParentId();
@@ -140,7 +140,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
             String url = mgrFunc.getUrl();
             String menuIcon = mgrFunc.getMenuIcon();
 
-            Map<String, Object> mgrFuncMap = new HashMap<String, Object>();
+            Map<String, Object> mgrFuncMap = Maps.newHashMap();
             mgrFuncMap.put("funcId", funcId);
             mgrFuncMap.put("parentId", parentId);
             mgrFuncMap.put("code", code);
@@ -176,7 +176,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
             mgrFuncList = this.getBasicFunc();
         }
 
-        Map<String, Map<String, Object>> mgrFuncs = new HashMap<String,Map<String, Object>>();
+        Map<String, Map<String, Object>> mgrFuncs = Maps.newHashMap();
         for(MgrFunc mgrFunc: mgrFuncList){
             Integer funcId = mgrFunc.getId();
             Integer parentId = mgrFunc.getParentId();
@@ -186,7 +186,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
             String url = mgrFunc.getUrl();
             String menuIcon = mgrFunc.getMenuIcon();
 
-            Map<String, Object> mgrFuncMap = new HashMap<String, Object>();
+            Map<String, Object> mgrFuncMap = Maps.newHashMap();
             mgrFuncMap.put("funcId", funcId);
             mgrFuncMap.put("parentId", parentId);
             mgrFuncMap.put("code", code);
@@ -214,13 +214,13 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
 
         //1、获取所有功能资源
         List<MgrFunc> mgrFuncList = this.getAll();
-        Map<Integer,Map<String, Object>> funcMaps = new HashMap<Integer, Map<String, Object>>();
+        Map<Integer,Map<String, Object>> funcMaps = Maps.newHashMap();
 
         //2、通过部门id获取所有功能部门关联
         MgrDepartFuncExample example = new MgrDepartFuncExample();
         example.createCriteria().andDepartIdEqualTo(Integer.parseInt(departId));
         List<MgrDepartFunc> funcListByDepart = mgrDepartFuncMapper.selectByExample(example);
-        Map<Integer, Integer> funcMapByDepart = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> funcMapByDepart = Maps.newHashMap();
 
         //3、循环所用部门功能关联并放入map中
         for(MgrDepartFunc mgrDepartFunc: funcListByDepart){
@@ -231,7 +231,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
 
         //4、循环所有功能资源并放入map中
         for(MgrFunc mgrFunc: mgrFuncList){
-            Map<String,Object> funcMap = new HashMap<String,Object>();
+            Map<String,Object> funcMap = Maps.newHashMap();
             String cnName = mgrFunc.getCnName();
             Integer parentIn = mgrFunc.getParentId();
             String type = mgrFunc.getType();
@@ -251,14 +251,14 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
         }
 
         //5、循环所有功能map并放入对应父节点下
-        List<Map<String, Object>> funcList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> funcList = Lists.newArrayList();
         for(Integer key: funcMaps.keySet()){
             Map<String, Object> funcMap = funcMaps.get(key);
             Object parentId = funcMap.get("parentId");
             if(parentId != null){
                 Object nodes = funcMaps.get(parentId).get("nodes");
                 if(nodes == null){
-                    List<Map<String, Object>> funcNodes = new ArrayList<Map<String, Object>>();
+                    List<Map<String, Object>> funcNodes = Lists.newArrayList();
                     funcMaps.get(parentId).put("nodes", funcNodes);
                 }
                 ((List<Map<String, Object>>)funcMaps.get(parentId).get("nodes")).add(funcMap);
@@ -268,7 +268,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
 
             //5.1、选择对应节点复选框
             if(funcMapByDepart.containsKey(key)){
-                Map<String, Boolean> stateMap = new HashMap<String, Boolean>();
+                Map<String, Boolean> stateMap = Maps.newHashMap();
                 stateMap.put("checked", true);
                 funcMap.put("state", stateMap);
             }
@@ -292,7 +292,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
         MgrDepartFuncExample example = new MgrDepartFuncExample();
         example.createCriteria().andDepartIdEqualTo(Integer.parseInt(departId));
         List<MgrDepartFunc> funcListByDepart = mgrDepartFuncMapper.selectByExample(example);
-        Map<Integer, Integer> funcMapByDepart = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> funcMapByDepart = Maps.newHashMap();
 
         //3、循环所用部门功能关联并放入map中
         for(MgrDepartFunc mgrDepartFunc: funcListByDepart){
@@ -302,9 +302,9 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
         }
 
         //4、循环所有功能资源并放入map中
-        Map<Integer,Map<String, Object>> funcMaps = new HashMap<Integer, Map<String, Object>>();
+        Map<Integer,Map<String, Object>> funcMaps = Maps.newHashMap();
         for(MgrFunc mgrFunc: mgrFuncList){
-            Map<String,Object> funcMap = new HashMap<String,Object>();
+            Map<String,Object> funcMap = Maps.newHashMap();
             String cnName = mgrFunc.getCnName();
             Integer parentIn = mgrFunc.getParentId();
             String type = mgrFunc.getType();
@@ -324,7 +324,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
         }
 
         //5、循环所有功能map并放入对应父节点下
-        List<Map<String, Object>> funcList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> funcList = Lists.newArrayList();
         for(Integer key: funcMaps.keySet()){
             Map<String, Object> funcMap = funcMaps.get(key);
             Object parentId = funcMap.get("parentId");
@@ -332,7 +332,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
                 if(funcMaps.containsKey(parentId)){
                     Object nodes = funcMaps.get(parentId).get("nodes");
                     if(nodes == null){
-                        List<Map<String, Object>> funcNodes = new ArrayList<Map<String, Object>>();
+                        List<Map<String, Object>> funcNodes = Lists.newArrayList();
                         funcMaps.get(parentId).put("nodes", funcNodes);
                     }
                     ((List<Map<String, Object>>)funcMaps.get(parentId).get("nodes")).add(funcMap);
@@ -344,7 +344,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
             }
             //5.1、选择对应节点复选框
             if(funcMapByDepart.containsKey(key)){
-                Map<String, Boolean> stateMap = new HashMap<String, Boolean>();
+                Map<String, Boolean> stateMap = Maps.newHashMap();
                 stateMap.put("checked", true);
                 funcMap.put("state", stateMap);
             }
@@ -365,9 +365,9 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
         List<MgrFunc> mgrFuncList = this.getAll();
 
         //2、循环所有功能资源并放入map中
-        Map<Integer,Map<String, Object>> funcMaps = new HashMap<Integer, Map<String, Object>>();
+        Map<Integer,Map<String, Object>> funcMaps = Maps.newHashMap();
         for(MgrFunc mgrFunc: mgrFuncList){
-            Map<String,Object> funcMap = new HashMap<String,Object>();
+            Map<String,Object> funcMap = Maps.newHashMap();
             String code = mgrFunc.getCode();
             String cnName = mgrFunc.getCnName();
             Integer parentIn = mgrFunc.getParentId();
@@ -389,14 +389,14 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
         }
 
         //3、循环所有功能map并放入对应父节点下
-        List<Map<String, Object>> funcList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> funcList = Lists.newArrayList();
         for(Integer key: funcMaps.keySet()){
             Map<String, Object> funcMap = funcMaps.get(key);
             Object parentId = funcMap.get("parentId");
             if(parentId != null){
                 Object nodes = funcMaps.get(parentId).get("nodes");
                 if(nodes == null){
-                    List<Map<String, Object>> funcNodes = new ArrayList<Map<String, Object>>();
+                    List<Map<String, Object>> funcNodes = Lists.newArrayList();
                     funcMaps.get(parentId).put("nodes", funcNodes);
                 }
                 ((List<Map<String, Object>>)funcMaps.get(parentId).get("nodes")).add(funcMap);
@@ -420,9 +420,9 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
         List<MgrFunc> mgrFuncList = this.getByUserId(userId);
 
         //2、循环所有功能资源并放入map中
-        Map<Integer,Map<String, Object>> funcMaps = new HashMap<Integer, Map<String, Object>>();
+        Map<Integer,Map<String, Object>> funcMaps = Maps.newHashMap();
         for(MgrFunc mgrFunc: mgrFuncList){
-            Map<String,Object> funcMap = new HashMap<String,Object>();
+            Map<String,Object> funcMap = Maps.newHashMap();
             String code = mgrFunc.getCode();
             String cnName = mgrFunc.getCnName();
             Integer parentIn = mgrFunc.getParentId();
@@ -444,7 +444,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
         }
 
         //3、循环所有功能map并放入对应父节点下
-        List<Map<String, Object>> funcList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> funcList = Lists.newArrayList();
         for(Integer key: funcMaps.keySet()){
             Map<String, Object> funcMap = funcMaps.get(key);
             Object parentId = funcMap.get("parentId");
@@ -452,7 +452,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
                 if(funcMaps.containsKey(parentId)){
                     Object nodes = funcMaps.get(parentId).get("nodes");
                     if(nodes == null){
-                        List<Map<String, Object>> funcNodes = new ArrayList<Map<String, Object>>();
+                        List<Map<String, Object>> funcNodes = Lists.newArrayList();
                         funcMaps.get(parentId).put("nodes", funcNodes);
                     }
                     ((List<Map<String, Object>>)funcMaps.get(parentId).get("nodes")).add(funcMap);
@@ -473,10 +473,10 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
      */
     @Override
     public List<Map<String, Object>> getFuncs(){
-        List<Map<String, Object>> funcList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> funcList = Lists.newArrayList();
 
         List<MgrFunc> mgrFuncList = this.getAll();
-        Map<String, Object> mgrFuncMap = new HashMap<String, Object>();
+        Map<String, Object> mgrFuncMap = Maps.newHashMap();
         for(MgrFunc mgrFunc: mgrFuncList){
             String code = mgrFunc.getCode();
             code = (code==null||"".equals(code))?"none":code;
@@ -492,7 +492,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
             String url = funcs[i].getUrl();
             String menuIcon = funcs[i].getIcon();
             if(!mgrFuncMap.containsKey(code)){
-                Map<String, Object> funcMap = new HashMap<String, Object>();
+                Map<String, Object> funcMap = Maps.newHashMap();
                 funcMap.put("code", code);
                 funcMap.put("cnName", cnName);
                 funcMap.put("type", type);
@@ -526,7 +526,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
      */
     private boolean isHasBasicFunc(){
         MgrFuncExample example = new MgrFuncExample();
-        List<String> codes = new ArrayList<String>();
+        List<String> codes = Lists.newArrayList();
         codes.add(MgrFuncEnum.FUNC_1.getCode());
         codes.add(MgrFuncEnum.FUNC_1_1.getCode());
         codes.add(MgrFuncEnum.FUNC_1_1_1.getCode());
@@ -545,7 +545,7 @@ public class MgrFuncServiceImpl implements IMgrFuncService {
      */
     private List<MgrFunc> getBasicFunc(){
 
-        List<MgrFunc> mgrFuncList = new ArrayList<MgrFunc>();
+        List<MgrFunc> mgrFuncList = Lists.newArrayList();
 
         MgrFunc mgrFunc1 = new MgrFunc();
         mgrFunc1.setId(1);

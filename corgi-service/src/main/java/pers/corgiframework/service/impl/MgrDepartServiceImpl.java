@@ -1,5 +1,7 @@
 package pers.corgiframework.service.impl;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.corgiframework.dao.domain.MgrDepart;
@@ -12,7 +14,8 @@ import pers.corgiframework.service.IMgrUserDepartService;
 import pers.corgiframework.tool.utils.DateTimeUtil;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by syk on 2017/4/2.
@@ -110,7 +113,7 @@ public class MgrDepartServiceImpl implements IMgrDepartService {
     public List<MgrDepart> getAllByProId(Integer proId){
 
         //1、定义所有部门的集合
-        List<MgrDepart> allList = new ArrayList<MgrDepart>();
+        List<MgrDepart> allList = Lists.newArrayList();
 
         //2、查询当前部门
         MgrDepart mgrDepart = mgrDepartMapper.selectByPrimaryKey(proId);
@@ -143,9 +146,9 @@ public class MgrDepartServiceImpl implements IMgrDepartService {
         List<MgrDepart> mgrDepartList = this.getAll();
 
         //2、定义一个部门map并把部门list转化为map
-        Map<Integer,Map<String, Object>> departMaps = new HashMap<Integer, Map<String, Object>>();
+        Map<Integer,Map<String, Object>> departMaps = Maps.newHashMap();
         for(MgrDepart mgrDepart: mgrDepartList){
-            Map<String,Object> departMap = new HashMap<String,Object>();
+            Map<String,Object> departMap = Maps.newHashMap();
             String cnName = mgrDepart.getCnName();
             Integer parentIn = mgrDepart.getParentId();
             String type = mgrDepart.getType();
@@ -161,14 +164,14 @@ public class MgrDepartServiceImpl implements IMgrDepartService {
         }
 
         //3、定义最顶层的部门列表并把对应的部门放到父部门下
-        List<Map<String, Object>> departList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> departList = Lists.newArrayList();
         for(Integer key: departMaps.keySet()){
             Map<String, Object> departMap = departMaps.get(key);
             Object parentId = departMap.get("parentId");
             if(parentId != null){
                 Object nodes = departMaps.get(parentId).get("nodes");
                 if(nodes == null){
-                    List<Map<String, Object>> funcNodes = new ArrayList<Map<String, Object>>();
+                    List<Map<String, Object>> funcNodes = Lists.newArrayList();
                     departMaps.get(parentId).put("nodes", funcNodes);
                 }
                 ((List<Map<String, Object>>)departMaps.get(parentId).get("nodes")).add(departMap);
@@ -189,7 +192,7 @@ public class MgrDepartServiceImpl implements IMgrDepartService {
     public List<Map<String, Object>> getTreeByUserId(Integer userId){
 
         //1、定义一个所有职能部门集合
-        List<MgrDepart> mgrDepartList = new ArrayList<MgrDepart>();
+        List<MgrDepart> mgrDepartList = Lists.newArrayList();
 
         //2、通过用户id查询所有用户部门关联
         List<MgrUserDepart> mgrUserDepartList = mgrUserDepartService.getByUser(userId);
@@ -202,9 +205,9 @@ public class MgrDepartServiceImpl implements IMgrDepartService {
         }
 
         //4、定义一个部门map并把部门list转化为map
-        Map<Integer,Map<String, Object>> departMaps = new HashMap<Integer, Map<String, Object>>();
+        Map<Integer,Map<String, Object>> departMaps = Maps.newHashMap();
         for(MgrDepart mgrDepart: mgrDepartList){
-            Map<String,Object> departMap = new HashMap<String,Object>();
+            Map<String,Object> departMap = Maps.newHashMap();
             String cnName = mgrDepart.getCnName();
             Integer parentIn = mgrDepart.getParentId();
             String type = mgrDepart.getType();
@@ -220,7 +223,7 @@ public class MgrDepartServiceImpl implements IMgrDepartService {
         }
 
         //5、定义最顶层的部门列表并把对应的部门放到父部门下
-        List<Map<String, Object>> departList = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> departList = Lists.newArrayList();
         for(Integer key: departMaps.keySet()){
             Map<String, Object> departMap = departMaps.get(key);
             Object parentId = departMap.get("parentId");
@@ -228,7 +231,7 @@ public class MgrDepartServiceImpl implements IMgrDepartService {
                 if(departMaps.containsKey(parentId)){
                     Object nodes = departMaps.get(parentId).get("nodes");
                     if(nodes == null){
-                        List<Map<String, Object>> funcNodes = new ArrayList<Map<String, Object>>();
+                        List<Map<String, Object>> funcNodes = Lists.newArrayList();
                         departMaps.get(parentId).put("nodes", funcNodes);
                     }
                     ((List<Map<String, Object>>)departMaps.get(parentId).get("nodes")).add(departMap);

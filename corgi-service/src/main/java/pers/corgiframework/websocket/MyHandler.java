@@ -1,5 +1,7 @@
 package pers.corgiframework.websocket;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -7,8 +9,6 @@ import org.springframework.web.socket.*;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +27,8 @@ public class MyHandler implements WebSocketHandler {
     // 用户标识
     private static final String CLIENT_ID = "userId";
     static {
-        loginUsers = new HashMap<>();
-        allUsers = new ArrayList<>();
+        loginUsers = Maps.newHashMap();
+        allUsers = Lists.newArrayList();
     }
 
     @Override
