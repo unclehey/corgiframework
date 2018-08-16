@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -81,20 +82,26 @@ public class GuavaUtil {
         List<String> list = Lists.newArrayList();
         Set<String> set = Sets.newHashSet();
         Map<String, String> map = Maps.newHashMap();
+
         /**
          * 不变Collection的创建
          * 什么是immutable(不可变)对象
          * 1、在多线程操作下，是线程安全的。
          * 2、所有不可变集合会比可变集合更有效的利用资源。
          * 3、中途不可改变
+         *
+         * 不可变对象有很多优点，包括：
+         * 当对象被不可信的库调用时，不可变形式是安全的；
+         * 不可变对象被多个线程调用时，不存在竞态条件问题
+         * 不可变集合不需要考虑变化，因此可以节省时间和空间。所有不可变的集合都比它们的可变形式有更好的内存利用率（分析和测试细节）；
+         * 不可变对象因为有固定不变，可以作为常量来安全使用。
          */
         ImmutableList<String> iList = ImmutableList.of("a", "b", "c");
+        System.out.println(Lists.reverse(iList));
+        System.out.println(Lists.partition(iList, 2));
         ImmutableSet<String> iSet = ImmutableSet.of("e1", "e2");
         ImmutableMap<String, String> iMap = ImmutableMap.of("k1", "v1", "k2", "v2");
-        // 创建一个map包含key为String，value为List类型
-        Multimap<String, Integer> listMap = ArrayListMultimap.create();
-        listMap.put("aa", 1);
-        listMap.put("aa", 2);
+
         /**
          * 其他的黑科技集合
          * MultiSet: 无序+可重复 count()方法获取单词的次数 增强了可读性+操作简单
@@ -106,7 +113,6 @@ public class GuavaUtil {
          * Table: 双键的Map Map--> Table-->rowKey+columnKey+value //和sql中的联合主键有点像
          * 创建方式: Table<String, String, Integer> tables = HashBasedTable.create();
          */
-
         System.out.println(parseListToStr(iList, "-"));
         System.out.println(parseMapToStr(iMap, ",", "="));
         String strList = "1- 2-3-4- 5- 6 ";
@@ -141,8 +147,15 @@ public class GuavaUtil {
         }
         System.out.println(fileList);
 
-        // 缓存
-        LoadingCache<String, String> cacheBuilder = CacheBuilder.newBuilder().build(new CacheLoader<String, String>() {
+        /**
+         * 通常来说，Guava Cache适用于：
+         * 1、你愿意消耗一些内存空间来提升速度。
+         * 2、你预料到某些键会被查询一次以上。
+         * 3、缓存中存放的数据总量不会超出内存容量。（Guava Cache是单个应用运行时的本地缓存，它不把数据存放到文件或外部服务器）
+         */
+        LoadingCache<String, String> cacheBuilder = CacheBuilder.newBuilder()
+                .expireAfterWrite(10, TimeUnit.MINUTES)
+                .build(new CacheLoader<String, String>() {
             @Override
             public String load(String s) throws Exception {
                 String strProValue = "hello " + s + "!";
@@ -160,6 +173,7 @@ public class GuavaUtil {
         });
         System.out.println("value : " + resultVal);
 
+        // 按字典顺序排序
         Map<String, String> params = Maps.newHashMap();
         params.put("appid", "sads");
         params.put("mch_id", "123456");
@@ -170,6 +184,89 @@ public class GuavaUtil {
         params.put("notify_url", "http://www.baidu.com");
         ImmutableSortedMap<String, String> sortedMap = ImmutableSortedMap.copyOf(params);
         System.out.println("sortedMap：" + sortedMap);
+
+        /**
+         * Multiset元素的顺序是无关紧要的：Multiset {a, a, b}和{a, b, a}是相等的”。
+         * 这里所说的集合[set]是数学上的概念，Multiset继承自JDK中的Collection接口，而不是Set接口，所以包含重复元素并没有违反原有的接口契约
+         * 可以用两种方式看待Multiset：
+         * 1、没有元素顺序限制的ArrayList<E>
+         * 2、Map<E, Integer>，键为元素，值为计数
+         */
+        Multiset<String> multiset = HashMultiset.create();
+        multiset.add("a");
+        multiset.add("b");
+        multiset.add("c");
+        multiset.add("d");
+        multiset.add("a");
+        multiset.add("b");
+        multiset.add("c");
+        multiset.add("b");
+        multiset.add("b");
+        multiset.add("b");
+        System.out.println("Occurrence of 'b' : " + multiset.count("b"));
+        System.out.println("Total Size : " + multiset.size());
+        // get the distinct elements of the multiset as set
+        Set<String> strSet = multiset.elementSet();
+        //display the elements of the set
+        System.out.println("Set [");
+        for (String s : strSet) {
+            System.out.println(s);
+        }
+        System.out.println("]");
+        // display all the elements of the multiset using iterator
+        Iterator<String> iterator = multiset.iterator();
+        System.out.println("MultiSet [");
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+        System.out.println("]");
+        // display the distinct elements of the multiset with their occurrence count
+        System.out.println("MultiSet [");
+        for (Multiset.Entry<String> entry : multiset.entrySet()) {
+            System.out.println("Element: " + entry.getElement() + ", Occurrence(s): " + entry.getCount());
+        }
+        System.out.println("]");
+        // remove extra occurrences
+        multiset.remove("b", 2);
+        // print the occurrence of an element
+        System.out.println("Occurence of 'b' : " + multiset.count("b"));
+
+        /**
+         * Multimap
+         * 创建一个map包含key为String，value为List类型
+         */
+        Multimap<String, Integer> listMap = ArrayListMultimap.create();
+        listMap.put("aa", 1);
+        listMap.put("aa", 2);
+        listMap.put("aa", 2);
+        listMap.put("bb", 3);
+        // Multimap.size()返回所有”键-单个值映射”的个数
+        System.out.println("Total Key Size : " + listMap.size());
+        // Multimap.keySet().size()返回不同键的个数
+        System.out.println("Total Difference Key Size : " + listMap.keySet().size());
+
+        /**
+         * BiMap实现键值对的双向映射
+         */
+        BiMap<String, Integer> biMap = HashBiMap.create();
+        biMap.put("小明", 25);
+        biMap.put("小红", 18);
+        biMap.put("小强", 30);
+        System.out.println(biMap.inverse().get(18));
+        System.out.println(biMap.get("小红"));
+
+        /**
+         * RangeMap描述了”不相交的、非空的区间”到特定值的映射
+         */
+        RangeMap<Integer, String> rangeMap = TreeRangeMap.create();
+        rangeMap.put(Range.closed(1, 10), "foo");
+        System.out.println(rangeMap);
+        rangeMap.put(Range.open(3, 6), "bar");
+        System.out.println(rangeMap);
+        rangeMap.put(Range.open(10, 20), "foo");
+        System.out.println(rangeMap);
+        rangeMap.remove(Range.closed(5, 11));
+        System.out.println(rangeMap);
 
     }
 

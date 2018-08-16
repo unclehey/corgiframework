@@ -16,6 +16,7 @@
 		Base64Util Base64工具类；
 		DateTimeUtil Java8全新日期时间API；
 		FileUtil 文件操作工具类；
+		GuavaUtil Google Guava常用工具类；
 		JsonUtil Json工具类；
 		OkHttpClientUtil HttpClient工具类；
 		PayUtil 支付工具类；
