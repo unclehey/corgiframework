@@ -13,8 +13,8 @@
 	<context:property-placeholder location="classpath:config.properties"/>
 
 	<!-- 引入配置文件 -->
-	<import resource="spring-redis.xml" />
 	<import resource="spring-mybatis.xml" />
+	<import resource="spring-redis.xml" />
 	<import resource="spring-mongo.xml" />
 	<import resource="spring-websocket.xml" />
 
