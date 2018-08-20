@@ -28,8 +28,6 @@ import java.util.List;
 @Service
 public class SmsServiceImpl extends BaseServiceImpl<SmsRecord> implements ISmsService {
     private final static Logger LOGGER = LoggerFactory.getLogger(SmsServiceImpl.class);
-    private static final int VERIFY_CODE_MINUTE = 5;
-    private static final String VERIFY_CODE = "##，您的验证码：##，" + VERIFY_CODE_MINUTE + "分钟内输入有效，请确认本人使用。";
 
     @Autowired
     private SmsRecordMapper smsRecordMapper;
@@ -45,16 +43,9 @@ public class SmsServiceImpl extends BaseServiceImpl<SmsRecord> implements ISmsSe
 
     @Override
     @Async
-    public void sendSms(String mobile, Integer type, String message, String userName) {
+    public void sendSms(String mobile, Integer smsType, String smsContent) {
         boolean isSendMsgSuccess = false;
         try {
-            String msgContent = "";
-            switch (type) {
-                case SmsConstant.VERIFY_CODE:
-                case SmsConstant.FORGET_PASS:
-                    msgContent = VERIFY_CODE.replaceFirst("##", userName).replaceFirst("##", message);
-                    break;
-            }
             // 短信开关
             String smsSwitchKey = SysRedisEnum.CORGI_SMS_SWITCH.getKey();
             String smsSwitchValue = redisService.getString(smsSwitchKey);
@@ -63,9 +54,9 @@ public class SmsServiceImpl extends BaseServiceImpl<SmsRecord> implements ISmsSe
                 redisService.setString(smsSwitchKey, SysRedisEnum.CORGI_SMS_SWITCH.getTerm(), smsSwitchValue);
             }
             if (smsSwitchValue.equals("ON")) {
-                isSendMsgSuccess = SmsUtil.sendSms(mobile, msgContent);
+                isSendMsgSuccess = SmsUtil.sendSms(mobile, smsContent);
             }
-            insertSmsRecord(isSendMsgSuccess, mobile, msgContent, type);
+            insertSmsRecord(isSendMsgSuccess, mobile, smsContent, smsType);
         } catch (Exception e) {
             LOGGER.error("Send Message Exception", e);
         }
@@ -86,12 +77,12 @@ public class SmsServiceImpl extends BaseServiceImpl<SmsRecord> implements ISmsSe
             smsRecord.setMobile(mobile);
             smsRecord.setContent(msgContent);
             smsRecord.setType(smsType);
-            smsRecord.setCreateTime(DateTimeUtil.getNowDateTime());
             if (isSendMsgSuccess) {
                 smsRecord.setFlag(1);// 短信发送状态：1成功
             } else {
                 smsRecord.setFlag(0);// 短信发送状态：0失败
             }
+            smsRecord.setCreateTime(DateTimeUtil.getNowDateTime());
             smsRecordMapper.insertSelective(smsRecord);
         } catch (Exception e) {
             LOGGER.error("Insert SmsRecord Exception", e);

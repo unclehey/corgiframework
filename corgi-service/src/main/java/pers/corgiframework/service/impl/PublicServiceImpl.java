@@ -162,7 +162,7 @@ public class PublicServiceImpl implements IPublicService {
         // 随机出来的验证码
         String verifyCode = StringUtil.generateRandomNumber(6);
         // 调用短信发送接口
-        smsService.sendSms(mobile, Integer.valueOf(smsType), verifyCode, "");
+        smsService.sendSms(mobile, Integer.valueOf(smsType), verifyCode);
         // 短信发送成功，将验证码放入redis
         String verifyKey = "verify:" + mobile;
         redisService.setString(verifyKey, 300, verifyCode);

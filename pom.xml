@@ -329,6 +329,13 @@
                 <version>1.10.6.RELEASE</version>
             </dependency>
 
+            <!-- Solve Junit：No suitable default RequestUpgradeStrategy found -->
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-websocket</artifactId>
+                <version>9.0.10</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

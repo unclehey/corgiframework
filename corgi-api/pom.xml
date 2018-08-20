@@ -26,6 +26,12 @@
             <artifactId>spring-test</artifactId>
         </dependency>
 
+        <!-- Solve Junit：No suitable default RequestUpgradeStrategy found -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-websocket</artifactId>
+        </dependency>
+
         <!-- 项目依赖corgi-service -->
         <dependency>
             <groupId>pers.corgiframework</groupId>
