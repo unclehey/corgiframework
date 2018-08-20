@@ -44,6 +44,7 @@ public class PublicServiceImpl implements IPublicService {
     private static final String MAILPWD = PropertiesUtil.getString("mail_pwd");
     private static final String MAILFROM = PropertiesUtil.getString("mail_from");
     private static final String MAILHOST = PropertiesUtil.getString("mail_host");
+    private static final String MAILPORT = PropertiesUtil.getString("mail_port");
     private static final String MAILPROTOCOL = PropertiesUtil.getString("mail_protocol");
     private static final String MAILAUTH = PropertiesUtil.getString("mail_auth");
 
@@ -204,6 +205,9 @@ public class PublicServiceImpl implements IPublicService {
             // 使用smtp：简单邮件传输协议
             props.put("mail.smtp.host", MAILHOST);  // 存储发送邮件服务器的信息
             props.put("mail.smtp.auth", MAILAUTH);    // 同时通过验证
+            props.put("mail.smtp.socketFactory.port", "465");   // SSLSocketFactory类的端口
+            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");   // SSLSocketFactory类
+            props.put("mail.smtp.port", MAILPORT);
             Session session = Session.getInstance(props);   // 根据属性新建一个邮件会话
             MimeMessage message = new MimeMessage(session); // 由邮件会话新建一个消息对象
             message.setFrom(MAILFROM); // 设置发件人的地址
@@ -244,6 +248,9 @@ public class PublicServiceImpl implements IPublicService {
             // 使用smtp：简单邮件传输协议
             props.put("mail.smtp.host", MAILHOST);  // 存储发送邮件服务器的信息
             props.put("mail.smtp.auth", MAILAUTH);    // 同时通过验证
+            props.put("mail.smtp.socketFactory.port", "465");   // SSLSocketFactory类的端口
+            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");   // SSLSocketFactory类
+            props.put("mail.smtp.port", MAILPORT);
             Session session = Session.getInstance(props);   // 根据属性新建一个邮件会话
             MimeMessage message = new MimeMessage(session); // 由邮件会话新建一个消息对象
             message.setFrom(MAILFROM); // 设置发件人的地址
