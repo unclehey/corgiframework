@@ -1,3 +1,4 @@
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,9 @@ import pers.corgiframework.service.IApiLogService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Created by syk on 2017/8/18.
@@ -56,6 +60,40 @@ public class JunitTest {
             LOGGER.error(e.getMessage(), e);
         }
 
+    }
+
+    public static void main(String[] args) throws Exception {
+        class CodingTask implements Runnable {
+            private final int employeeId;
+            public CodingTask(int employeeId) {
+                this.employeeId = employeeId;
+            }
+
+            @Override
+            public void run() {
+                LOGGER.info("Employee " + employeeId + " started writing code.");
+                try {
+                    Thread.sleep(5000);
+                } catch (Exception e) {
+                    LOGGER.error(e.getMessage(), e);
+                }
+                LOGGER.info("Employee " + employeeId + " finished writing code.");
+            }
+        }
+
+
+        // 线程池
+        ExecutorService executor = Executors.newFixedThreadPool(3);
+        List<Future<?>> taskResults = Lists.newLinkedList();
+        for (int i = 0; i < 10; i++) {
+            taskResults.add(executor.submit(new CodingTask(i)));
+        }
+        LOGGER.info("10 tasks distribute success.");
+        for (Future<?> taskResult : taskResults) {
+            taskResult.get();
+        }
+        LOGGER.info("All tasks finished.");
+        executor.shutdown();
     }
 
 }
