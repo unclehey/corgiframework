@@ -357,29 +357,25 @@ public class SysController {
         try {
             if (StringUtils.isNotBlank(delId)) {
                 Integer categoryId = Integer.valueOf(delId);
-                BookCategory category = sysCategoryService.selectByPrimaryKey(categoryId);
+                SysCategory category = sysCategoryService.selectByPrimaryKey(categoryId);
                 if (null != category) {
-                    int flag = sysCategoryService.deleteByPrimaryKey(categoryId);
-                    if (flag == 1) {
-                        // 删除成功
-                        bisPrompt.setBisStatus(BisPromptConstant.SUCCESS_STATUS);
-                        bisPrompt.setBisMsg(BisPromptConstant.SUCCESS_MESSAGE);
-                    } else {
+                    int flag = sysCategoryService.delete(categoryId);
+                    if (flag != 1) {
                         bisPrompt.setBisStatus(BisPromptConstant.FAIL_STATUS);
-                        bisPrompt.setBisMsg(BisPromptConstant.FAIL_MESSAGE);
+                        bisPrompt.setBisMsg(BisPromptConstant.BISPROMPT_MAP.get(BisPromptConstant.FAIL_STATUS));
                     }
                 } else {
                     // 非法请求
                     bisPrompt.setBisStatus(BisPromptConstant.INVALID_REQUEST_STATUS);
-                    bisPrompt.setBisMsg(BisPromptConstant.INVALID_REQUEST_MESSAGE);
+                    bisPrompt.setBisMsg(BisPromptConstant.BISPROMPT_MAP.get(BisPromptConstant.INVALID_REQUEST_STATUS));
                 }
             } else {
                 // 参数有误
                 bisPrompt.setBisStatus(BisPromptConstant.INVALID_REQUEST_STATUS);
-                bisPrompt.setBisMsg(BisPromptConstant.INVALID_REQUEST_MESSAGE);
+                bisPrompt.setBisMsg(BisPromptConstant.BISPROMPT_MAP.get(BisPromptConstant.INVALID_REQUEST_STATUS));
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
         return bisPrompt;
     }

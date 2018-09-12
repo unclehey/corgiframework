@@ -215,7 +215,7 @@
                     delId : delId
                 }
                 $.ajax({
-                    url : "book/category/del.do",
+                    url : "sys/category/del.do",
                     type : "post",
                     dataType : "json",
                     data : params,
