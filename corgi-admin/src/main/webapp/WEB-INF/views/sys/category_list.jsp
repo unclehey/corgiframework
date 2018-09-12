@@ -201,6 +201,42 @@
 			}
 		});
 	}
+
+    // 删除分类
+    function delCategory(rowId) {
+        $('#alert-error').css("display", "none");
+        $('#alert-success').css("display", "none");
+        var rowData = $('#grid-table').jqGrid('getRowData', rowId);
+        var delId = rowData.id;
+        var delCategoryName = rowData.categoryName;
+        bootbox.confirm("<h4 style='text-align: center;'>您确定要删除名称为【" + delCategoryName +"】的分类吗？</h4>", function(result) {
+            if(result) {
+                var params = {
+                    delId : delId
+                }
+                $.ajax({
+                    url : "book/category/del.do",
+                    type : "post",
+                    dataType : "json",
+                    data : params,
+                    success : function(result) {
+                        var bisStatus = result.bisStatus;
+                        if (bisStatus == '1000') {
+                            // 删除成功
+                            $("#grid-table").jqGrid('delRowData', rowId);
+                            $('#alert-success').css("display", "block");
+                        }  else {
+                            $('#error_msg').html(result.bisMsg);
+                            $('#alert-error').css("display", "block");
+                        }
+                    },
+                    error : function(e) {
+                        location.href = location.href;
+                    }
+                });
+            }
+        });
+    }
 </script>
 <div class="main-content-inner">
 	<div class="breadcrumbs" id="breadcrumbs">
@@ -478,6 +514,9 @@
 			if(typeof(mgrFuncMap["func_0_2_1_2"]) != "undefined"){
 				btsHtml = btsHtml + "<button class='btn btn-minier btn-warning' type='button' onclick='showUpdateCategory("+ options.rowId + ");'>修改</button>";
 			}
+            if(typeof(mgrFuncMap["func_0_2_1_3"]) != "undefined"){
+                btsHtml = btsHtml + "&nbsp;&nbsp;<button class='btn btn-minier btn-danger' type='button' onclick='delCategory("+ options.rowId + ");'>删除</button>";
+            }
 			return btsHtml;
 		}
 	}];

@@ -349,6 +349,41 @@ public class SysController {
         return bisPrompt;
     }
 
+    @RequestMapping("/category/del")
+    @ResponseBody
+    public Object categoryDel(HttpServletRequest request) {
+        String delId = request.getParameter("delId");
+        BisPrompt bisPrompt = new BisPrompt();
+        try {
+            if (StringUtils.isNotBlank(delId)) {
+                Integer categoryId = Integer.valueOf(delId);
+                BookCategory category = sysCategoryService.selectByPrimaryKey(categoryId);
+                if (null != category) {
+                    int flag = sysCategoryService.deleteByPrimaryKey(categoryId);
+                    if (flag == 1) {
+                        // 删除成功
+                        bisPrompt.setBisStatus(BisPromptConstant.SUCCESS_STATUS);
+                        bisPrompt.setBisMsg(BisPromptConstant.SUCCESS_MESSAGE);
+                    } else {
+                        bisPrompt.setBisStatus(BisPromptConstant.FAIL_STATUS);
+                        bisPrompt.setBisMsg(BisPromptConstant.FAIL_MESSAGE);
+                    }
+                } else {
+                    // 非法请求
+                    bisPrompt.setBisStatus(BisPromptConstant.INVALID_REQUEST_STATUS);
+                    bisPrompt.setBisMsg(BisPromptConstant.INVALID_REQUEST_MESSAGE);
+                }
+            } else {
+                // 参数有误
+                bisPrompt.setBisStatus(BisPromptConstant.INVALID_REQUEST_STATUS);
+                bisPrompt.setBisMsg(BisPromptConstant.INVALID_REQUEST_MESSAGE);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return bisPrompt;
+    }
+
     @RequestMapping("/upload/image")
     public void uploadCategoryImage(HttpServletResponse response, @RequestParam MultipartFile addAttr) {
         try {
