@@ -3,6 +3,7 @@ package pers.corgiframework.multithread;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pers.corgiframework.dao.model.BisPrompt;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class MultiThreadUtil<T> {
     // 线程个数
     private int threadCount;
     // 线程池管理器
-    private CompletionService<ResultBean> pool = null;
+    private CompletionService<BisPrompt> pool = null;
 
     public MultiThreadUtil(int threadCount) {
         if (threadCount > 0) {
@@ -34,9 +35,9 @@ public class MultiThreadUtil<T> {
      * @param data 线程处理的大数据量list
      * @param params 处理数据的辅助参数
      * @param task 具体执行业务的接口
-     * @return ResultBean
+     * @return BisPrompt
      */
-    public ResultBean execute(List<T> data, Map<String, Object> params, ITask<ResultBean<String>, T> task) {
+    public BisPrompt execute(List<T> data, Map<String, Object> params, ITask<BisPrompt<String>, T> task) {
         // 创建线程池
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         // 根据线程池初始化线程池管理器
@@ -63,13 +64,13 @@ public class MultiThreadUtil<T> {
         }
 
         // 总的返回结果集
-        List<ResultBean<String>> result = Lists.newArrayList();
+        List<BisPrompt<String>> result = Lists.newArrayList();
         for (int i = 0; i < threadCount; i++) {
             // 每个线程处理结果集
-            ResultBean<List<ResultBean<String>>> threadResult;
+            BisPrompt<List<BisPrompt<String>>> threadResult;
             try {
                 threadResult = pool.take().get();
-                result.addAll(threadResult.getData());
+                result.addAll(threadResult.getBisObj());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
@@ -81,7 +82,9 @@ public class MultiThreadUtil<T> {
         // 执行结束时间
         long end_l = System.currentTimeMillis();
         logger.info("总耗时：{}ms", (end_l - l));
-        return ResultBean.newInstance().setData(result);
+        BisPrompt bisPrompt = new BisPrompt();
+        bisPrompt.setBisObj(result);
+        return bisPrompt;
     }
 
     public void setThreadCount(int threadCount) {

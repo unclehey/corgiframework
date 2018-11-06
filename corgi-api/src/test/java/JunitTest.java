@@ -6,9 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import pers.corgiframework.dao.model.BisPrompt;
 import pers.corgiframework.multithread.ITask;
 import pers.corgiframework.multithread.MultiThreadUtil;
-import pers.corgiframework.multithread.ResultBean;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -26,7 +26,7 @@ public class JunitTest {
     final static Logger LOGGER = LoggerFactory.getLogger(JunitTest.class);
 
     @Resource(name = "smsTask")
-    private ITask<ResultBean<String>, Integer> task;
+    private ITask<BisPrompt<String>, Integer> task;
 
     @Test
     public void test(){
@@ -42,8 +42,8 @@ public class JunitTest {
             Map<String, Object> params = Maps.newHashMap();
             params.put("param", "multiThread");
             // 执行多线程处理，并返回处理结果
-            ResultBean<List<ResultBean<String>>> resultBean = threadUtil.execute(data, params, task);
-            System.out.println("处理完成 " + resultBean.getMsg());
+            BisPrompt<List<BisPrompt<String>>> bisPrompt = threadUtil.execute(data, params, task);
+            System.out.println("处理完成 " + bisPrompt.getBisMsg());
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
         }

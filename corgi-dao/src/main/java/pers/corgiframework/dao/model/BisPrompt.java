@@ -3,10 +3,10 @@ package pers.corgiframework.dao.model;
 /**
  * Created by syk on 2017/2/20.
  */
-public class BisPrompt {
+public class BisPrompt<T> {
     private String bisStatus;
     private String bisMsg;
-    private Object bisObj;
+    private T bisObj;
 
     public BisPrompt() {
         this.bisStatus = "1000";
@@ -29,11 +29,11 @@ public class BisPrompt {
         this.bisMsg = bisMsg;
     }
 
-    public Object getBisObj() {
+    public T getBisObj() {
         return bisObj;
     }
 
-    public void setBisObj(Object bisObj) {
+    public void setBisObj(T bisObj) {
         this.bisObj = bisObj;
     }
 }

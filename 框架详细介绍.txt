@@ -75,7 +75,6 @@
 		HandleCallable 数据处理类；
 		ITask 任务处理接口；
 		SmsTask 任务接口实现类；
-		ResultBean 返回结果封装；
 	6、resources资源文件（spring相关配置文件）；
 		spring.xml spring配置文件；
 		spring-mybatis.xml数据库连接池、事务等相关配置；
