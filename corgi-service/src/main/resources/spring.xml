@@ -19,7 +19,7 @@
 	<import resource="spring-websocket.xml" />
 
 	<!-- 自动扫描依赖将其注入为bean -->
-	<context:component-scan base-package="pers.corgiframework.service, pers.corgiframework.transfer" />
+	<context:component-scan base-package="pers.corgiframework.service, pers.corgiframework.transfer, pers.corgiframework.multithread" />
 
 	<!-- 异步任务调度器 -->
 	<task:annotation-driven executor="asyncExecutor"/>
