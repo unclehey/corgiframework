@@ -13,6 +13,7 @@
 		alipay 支付宝支付相关工具类；
 		wechat 微信相关工具类；
 		AESUtil AES加解密工具类；
+		ArithmeticUtil 算法工具类；
 		Base64Util Base64工具类；
 		DateTimeUtil Java8全新日期时间API；
 		FileUtil 文件操作工具类；
@@ -21,6 +22,7 @@
 		OkHttpClientUtil HttpClient工具类；
 		PayUtil 支付工具类；
 		PropertiesUtil 配置文件读取工具类；
+		QRCodeUtil 二维码生成工具类；
 		RSAUtil RSA加解密工具类；
 		SerializationUtil 序列化工具类；
 		SignUtil 签名工具类；
@@ -68,7 +70,13 @@
 	4、websocket包
 		MyHandler WebSocket处理器；
 		WebSocketInterceptor WebSocket拦截器，获取请求参数；
-	5、resources资源文件（spring相关配置文件）；
+	5、multithread包
+		MultiThreadUtil 多线程工具类；
+		HandleCallable 数据处理类；
+		ITask 任务处理接口；
+		SmsTask 任务接口实现类；
+		ResultBean 返回结果封装；
+	6、resources资源文件（spring相关配置文件）；
 		spring.xml spring配置文件；
 		spring-mybatis.xml数据库连接池、事务等相关配置；
 		spring-redis.xml redis配置文件；
