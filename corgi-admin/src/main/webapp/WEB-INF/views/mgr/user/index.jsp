@@ -125,8 +125,8 @@
 													<div class="profile-info-name">注册时间</div>
 													<div class="profile-info-value">
 														<span id="createTime">
-															<%--S=Short, M=Medium, L=Long, F=Full, -=None--%>
-															<javatime:format value="${mgrUser.createTime}" style="FL" />
+															<%-- S=Short, M=Medium, L=Long, F=Full, -=None --%>
+															<javatime:format value="${mgrUser.createTime}" style="MM" />
 														</span>
 													</div>
 												</div>
@@ -135,7 +135,7 @@
 													<div class="profile-info-name">最后登录时间</div>
 													<div class="profile-info-value">
 														<span id="lastLoginTime">
-															<javatime:format value="${mgrUser.lastLoginTime}" style="FL" />
+															<javatime:format value="${mgrUser.lastLoginTime}" style="MM" />
 														</span>
 													</div>
 												</div>

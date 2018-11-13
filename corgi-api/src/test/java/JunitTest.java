@@ -25,6 +25,7 @@ import java.util.concurrent.Future;
 public class JunitTest {
     final static Logger LOGGER = LoggerFactory.getLogger(JunitTest.class);
 
+    // 此处如果有多个任务实现类，可以按需引用
     @Resource(name = "smsTask")
     private ITask<BisPrompt<String>, Integer> task;
 
