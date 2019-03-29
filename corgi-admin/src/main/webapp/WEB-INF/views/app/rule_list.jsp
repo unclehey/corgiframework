@@ -1,18 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-    $('.form_datetime').datetimepicker({
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        forceParse: 0,
-        minView: "month", //选择日期后，不会再跳转去选择时分秒
-        startDate: new Date(),
-        language: 'zh-CN',
-        format: 'yyyy-mm-dd'
-    });
     // 模态框调用前的操作
     $('#addRuleModal').on('show.bs.modal', function () {
         // 执行的操作
@@ -568,4 +556,8 @@
     }];
     var caption = "规则列表";
     reloadJqGrid("app/rule/list/json.do", "json", grid_data, colNames, colModel, false, caption, true, false);
+</script>
+<script>
+    // 加载时间选择控件
+    reloadDate("form_datetime");
 </script>

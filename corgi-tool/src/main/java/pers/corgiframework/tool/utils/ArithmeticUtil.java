@@ -1,5 +1,8 @@
 package pers.corgiframework.tool.utils;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * 算法工具类
  * Created by UncleHey on 2018.10.25.
@@ -104,6 +107,51 @@ public class ArithmeticUtil {
         return k;
     }
 
+
+    /**
+     * 合并2个有序数组并去重
+     * 算法：
+     * 1. Set去重
+     * 1. 设置两个指针i,j，分别指向a数组和b数组，index标识传入的数组;
+     * 2. 比较指针i,j指向的值，小的值存入指针index指向的结果数组中，当有一个指针（i或j）先到达数组末尾时，比较结束；
+     * 3. 将指针（i或j）没有到达数组末尾的数组复制到指针index指向的结果数组中
+     * @param a
+     * @param b
+     * @return
+     */
+    public static int[] merge(int[] a, int[] b) {
+        Set set = new HashSet();
+        for (int i = 0; i < a.length; i++) {
+            set.add(a[i]);
+        }
+        for (int i = 0; i < b.length; i++) {
+            set.add(b[i]);
+        }
+        int[] c = new int[set.size()];
+        int i = 0, j = 0, index = 0;
+        //比较指针i,j指向的值，小的值存入指针index指向的结果数组中，当有一个指针（i或j）先到达数组末尾时，比较结束；
+        while (i < a.length && j < b.length) {
+            if (a[i] < b[j]) {
+                c[index++] = a[i++];
+            } else if (a[i] == b[j]) {
+                c[index++] = a[i];
+                i++;
+                j++;
+            } else {
+                c[index++] = b[j++];
+            }
+        }
+        // 将指针i没有到达数组末尾的数组复制到指针index指向的结果数组中
+        while (i < a.length) {
+            c[index++] = a[i++];
+        }
+        // 将指针j没有到达数组末尾的数组复制到指针index指向的结果数组中
+        while (j < b.length) {
+            c[index++] = b[j++];
+        }
+        return c;
+    }
+
     public static void main(String[] args) {
         //System.out.println(findMissNumber(new int[]{0, 1, 2, 3, 4})); //5
         //System.out.println(findMissNumber(new int[]{1, 2, 3, 4})); //0
@@ -112,9 +160,12 @@ public class ArithmeticUtil {
         //System.out.println(findMissNumber(new int[]{0})); //2
         //System.out.println(Arrays.toString(bubbleSort(new int[]{1,5,3,7,2,9,6})));
         //System.out.println(Arrays.toString(bubbleSort(new int[]{9,5,3,7,2,1,6})));
-        System.out.println(findNum(new int[]{2,2,2,2,3,2,9,2,2}));
-        System.out.println(findNum(new int[]{5,1,5,1,5,1,5,1,5}));
-
+        //System.out.println(findNum(new int[]{2,2,2,2,3,2,9,2,2}));
+        //System.out.println(findNum(new int[]{5,1,5,1,5,1,5,1,5}));
+        //int[] a = {12, 29, 32, 48, 67, 99};
+        //int[] b = {9, 12, 19, 32, 45, 78, 99, 100, 101};
+        //int[] c = merge(a, b);
+        //System.out.println(Arrays.toString(c));
     }
 
 }

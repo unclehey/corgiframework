@@ -86,6 +86,9 @@ public class PayUtil {
         if (tradeType.equals(PayConstant.TRADE_TYPE_H5)) {
             params.put("scene_info", sceneInfo);
         }
+        if (tradeType.equals(PayConstant.TRADE_TYPE_NATIVE)) {
+            params.put("product_id", openId);
+        }
         params.put("input_charset", "UTF-8");
         // 请求参数按字典排序
         String sortParams = assembleNoSignParamsBySort(params);

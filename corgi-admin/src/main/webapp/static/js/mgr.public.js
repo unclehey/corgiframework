@@ -42,12 +42,11 @@ function reloadJqGrid(url, datatype, grid_data, colNames, colModel, footerrow, c
 			datatype : datatype,
 			mtype : "POST",
 			data : grid_data,
-			height : 530,
+			height : 650,
 			colNames : colNames,
 			colModel : colModel,
-
 			viewrecords : true,
-			rowNum : 20,
+			rowNum : 50,
 			rowList : [ 10, 20, 30, 50 ],
 			pager : pager_selector,
 			altRows : true,
@@ -159,4 +158,211 @@ function pickDate(elem) {
 		language:  'zh-CN',
 		format: 'yyyy-mm-dd'
 	});
+}
+
+// 时间选择控件（年月日时分）
+function reloadDateTime(dateTimeId) {
+    var form_datetime = "." + dateTimeId;
+    $(form_datetime).datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        startDate: new Date(),
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd hh:ii:ss'
+    });
+}
+
+// 时间选择控件（年月日）
+function reloadDate(dateId) {
+    var form_date = "." + dateId;
+    $(form_date).datetimepicker({
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        minView: "month", //选择日期后，不会再跳转去选择时分秒
+        startDate: new Date(),
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd'
+    });
+}
+
+// spinner初始化
+var opts = {
+    lines: 12, // 花瓣数目
+    length: 8, // 花瓣长度
+    width: 3, // 花瓣宽度
+    radius: 10, // 花瓣距中心半径
+    corners: 1, // 花瓣圆滑度 (0-1)
+    rotate: 0, // 花瓣旋转角度
+    direction: 1, // 花瓣旋转方向 1: 顺时针, -1: 逆时针
+    color: '#000', // 花瓣颜色
+    speed: 1, // 花瓣旋转速度
+    trail: 60, // 花瓣旋转时的拖影(百分比)
+    shadow: false, // 花瓣是否显示阴影
+    hwaccel: false, //spinner 是否启用硬件加速及高速旋转
+    className: 'spinner', // spinner css 样式名称
+    zIndex: 2e9, // spinner的z轴 (默认是2000000000)
+    top: 'auto', // spinner 相对父容器Top定位 单位 px
+    left: 'auto', // spinner 相对父容器Left定位 单位 px
+    position: 'relative', // element position
+    progress: true,      // show progress tracker
+    progressTop: 0,       // offset top for progress tracker
+    progressLeft: 0       // offset left for progress tracker
+};
+var spinner = undefined;
+
+
+/**
+ * Bootstrap Lightweight Editor
+ * 富文本编辑器
+ */
+function reloadWysiwyg(pageEditorId) {
+    var page_editor = "#" + pageEditorId;
+    jQuery(function ($) {
+        // Multiple related js
+        if (!ace.vars['touch']) {
+            $('.chosen-select').chosen({allow_single_deselect: true});
+            //resize the chosen on window resize
+
+            $(window)
+                .off('resize.chosen')
+                .on('resize.chosen', function () {
+                    $('.chosen-select').each(function () {
+                        var $this = $(this);
+                        $this.next().css({'width': $this.parent().width()});
+                    })
+                }).trigger('resize.chosen');
+            //resize chosen on sidebar collapse/expand
+            $(document).on('settings.ace.chosen', function (e, event_name, event_val) {
+                if (event_name != 'sidebar_collapsed') return;
+                $('.chosen-select').each(function () {
+                    var $this = $(this);
+                    $this.next().css({'width': $this.parent().width()});
+                })
+            });
+        }
+
+        // wysiwyg related js
+        function showErrorAlert(reason, detail) {
+            var msg = '';
+            if (reason === 'unsupported-file-type') {
+                msg = "Unsupported format " + detail;
+            }
+            else {
+                //console.log("error uploading file", reason, detail);
+            }
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+        }
+
+        //but we want to change a few buttons colors for the third style
+        $(page_editor).ace_wysiwyg({
+            toolbar:
+                [
+                    'font',
+                    null,
+                    'fontSize',
+                    null,
+                    {name: 'bold', className: 'btn-info'},
+                    {name: 'italic', className: 'btn-info'},
+                    {name: 'strikethrough', className: 'btn-info'},
+                    {name: 'underline', className: 'btn-info'},
+                    null,
+                    {name: 'insertunorderedlist', className: 'btn-success'},
+                    {name: 'insertorderedlist', className: 'btn-success'},
+                    {name: 'outdent', className: 'btn-purple'},
+                    {name: 'indent', className: 'btn-purple'},
+                    null,
+                    {name: 'justifyleft', className: 'btn-primary'},
+                    {name: 'justifycenter', className: 'btn-primary'},
+                    {name: 'justifyright', className: 'btn-primary'},
+                    {name: 'justifyfull', className: 'btn-inverse'},
+                    null,
+                    {name: 'createLink', className: 'btn-pink'},
+                    {name: 'unlink', className: 'btn-pink'},
+                    null,
+                    {name: 'insertImage', className: 'btn-success'},
+                    null,
+                    'foreColor',
+                    null,
+                    {name: 'undo', className: 'btn-grey'},
+                    {name: 'redo', className: 'btn-grey'}
+                ],
+            'wysiwyg': {
+                fileUploadError: showErrorAlert
+            }
+        }).prev().addClass('wysiwyg-style2');
+
+        $('[data-toggle="buttons"] .btn').on('click', function (e) {
+            var target = $(this).find('input[type=radio]');
+            var which = parseInt(target.val());
+            var toolbar = $(page_editor).prev().get(0);
+            if (which >= 1 && which <= 4) {
+                toolbar.className = toolbar.className.replace(/wysiwyg\-style(1|2)/g, '');
+                if (which == 1) $(toolbar).addClass('wysiwyg-style1');
+                else if (which == 2) $(toolbar).addClass('wysiwyg-style2');
+                if (which == 4) {
+                    $(toolbar).find('.btn-group > .btn').addClass('btn-white btn-round');
+                } else $(toolbar).find('.btn-group > .btn-white').removeClass('btn-white btn-round');
+            }
+        });
+
+        //RESIZE IMAGE
+
+        //Add Image Resize Functionality to Chrome and Safari
+        //webkit browsers don't have image resize functionality when content is editable
+        //so let's add something using jQuery UI resizable
+        //another option would be opening a dialog for user to enter dimensions.
+        if (typeof jQuery.ui !== 'undefined' && ace.vars['webkit']) {
+
+            var lastResizableImg = null;
+
+            function destroyResizable() {
+                if (lastResizableImg == null) return;
+                lastResizableImg.resizable("destroy");
+                lastResizableImg.removeData('resizable');
+                lastResizableImg = null;
+            }
+
+            var enableImageResize = function () {
+                $('.wysiwyg-editor')
+                    .on('mousedown', function (e) {
+                        var target = $(e.target);
+                        if (e.target instanceof HTMLImageElement) {
+                            if (!target.data('resizable')) {
+                                target.resizable({
+                                    aspectRatio: e.target.width / e.target.height,
+                                });
+                                target.data('resizable', true);
+
+                                if (lastResizableImg != null) {
+                                    //disable previous resizable image
+                                    lastResizableImg.resizable("destroy");
+                                    lastResizableImg.removeData('resizable');
+                                }
+                                lastResizableImg = target;
+                            }
+                        }
+                    })
+                    .on('click', function (e) {
+                        if (lastResizableImg != null && !(e.target instanceof HTMLImageElement)) {
+                            destroyResizable();
+                        }
+                    })
+                    .on('keydown', function () {
+                        destroyResizable();
+                    });
+            }
+
+            enableImageResize();
+        }
+
+    });
 }

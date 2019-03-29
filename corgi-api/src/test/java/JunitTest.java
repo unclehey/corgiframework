@@ -52,37 +52,51 @@ public class JunitTest {
     }
 
     public static void main(String[] args) throws Exception {
-        class CodingTask implements Runnable {
-            private final int employeeId;
-            public CodingTask(int employeeId) {
-                this.employeeId = employeeId;
+        class MyThreadPrint implements Runnable {
+            private String name;
+            private Object prev;
+            private Object self;
+
+            public MyThreadPrint(String name, Object prev, Object self) {
+                this.name = name;
+                this.prev = prev;
+                this.self = self;
             }
 
             @Override
             public void run() {
-                LOGGER.info("Employee " + employeeId + " started writing code.");
-                try {
-                    Thread.sleep(5000);
-                } catch (Exception e) {
-                    LOGGER.error(e.getMessage(), e);
+                int count = 10;
+                while (count > 0) {
+                    synchronized (prev) {
+                        synchronized (self) {
+                            System.out.print(name);
+                            count--;
+                            self.notify();
+                        }
+                        try {
+                            prev.wait();
+                        } catch (Exception e) {
+                            LOGGER.error(e.getMessage(), e);
+                        }
+                    }
                 }
-                LOGGER.info("Employee " + employeeId + " finished writing code.");
             }
         }
 
+        Object a = new Object();
+        Object b = new Object();
+        Object c = new Object();
+        MyThreadPrint pa = new MyThreadPrint("A", c, a);
+        MyThreadPrint pb = new MyThreadPrint("B", a, b);
+        MyThreadPrint pc = new MyThreadPrint("C", b, c);
 
-        // 线程池
-        ExecutorService executor = Executors.newFixedThreadPool(3);
-        List<Future<?>> taskResults = Lists.newLinkedList();
-        for (int i = 0; i < 10; i++) {
-            taskResults.add(executor.submit(new CodingTask(i)));
-        }
-        LOGGER.info("10 tasks distribute success.");
-        for (Future<?> taskResult : taskResults) {
-            taskResult.get();
-        }
-        LOGGER.info("All tasks finished.");
-        executor.shutdown();
+        new Thread(pa).start();
+        Thread.sleep(100);  //确保按顺序A、B、C执行
+        new Thread(pb).start();
+        Thread.sleep(100);
+        new Thread(pc).start();
+        Thread.sleep(100);
+
     }
 
 }

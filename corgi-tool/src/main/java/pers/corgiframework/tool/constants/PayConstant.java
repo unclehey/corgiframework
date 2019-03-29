@@ -11,17 +11,22 @@ public interface PayConstant {
     Integer PAY_SUCCESS = 1;
     Integer PAY_FAILED = 2;
     Integer REFUND_SUCCESS = 3;
+
     // 退款状态
     Integer NO_REFUND = 0;
     Integer REFUND_PART = 1;
     Integer REFUND_ALL = 2;
+
     // 支付渠道
     String WEIXIN_PAY = "W";
     String ALI_PAY = "A";
+
     // 支付类型
     String TRADE_TYPE_APP = "APP";
     String TRADE_TYPE_PUBLIC = "JSAPI";
     String TRADE_TYPE_H5 = "MWEB";
+    String TRADE_TYPE_NATIVE = "NATIVE";
+
     // 支付来源
     String SOURCE_IOS = "iOS";
     String SOURCE_ANDROID = "Android";

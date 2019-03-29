@@ -83,6 +83,11 @@ public class WeChatServiceImpl implements IWeChatService {
                         String mweb_url = String.valueOf(returnMap.get("mweb_url"));
                         bisPrompt.setBisObj(mweb_url);
                         break;
+                    case PayConstant.TRADE_TYPE_NATIVE:
+                        // Native支付:扫描商户生成的二维码
+                        String code_url = String.valueOf(returnMap.get("code_url"));
+                        bisPrompt.setBisObj(code_url);
+                        break;
                 }
             } else {
                 // 错误代码描述
